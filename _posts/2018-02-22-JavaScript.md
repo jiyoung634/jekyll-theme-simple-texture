@@ -2599,7 +2599,7 @@ function getCookie(cname) {
 
 ## 8. DOM (Document Object Model)
 
-### 1) 엘리먼트 탐색 메소드(직접 선택자)
+### 1) 엘리먼트 탐색 methods(직접 선택자)
 
 ```javascript
 <!DOCTYPE html>
@@ -2900,6 +2900,746 @@ for(var a=0; a<pListLen; ++a){
 	pList[a].innerHTML = "Hello, World!";
 	pList[a].style.color = "skyblue"
 }
+
+</script>
+</body>
+</html>
+```
+
+
+
+### 2)  Document Object Properties and Methods
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+/*
+자바스크립트 내장객체
+- 객체는 자바스크립트 프로그램의 대상이다.
+- 내장 객체는 자바스크립트가 기본적으로 제공하는 객체이다.
+- BOM(Browser Object Model)은 브라우저를 객체로 인식하고, 브라우저 자신을 프로그램으로 통제하는 방법. 예를 들어, 창 열기, 창 닫기.
+- DOM(Document Object Model)은 현재 메모리에 로딩되어 있는 웹페이지를 객체로 인식하고, 웹페이지 자신을 프로그램으로 통제하는 방법. 예를 들어, 페이지 내의 특정 콘텐츠에 대한 수정, 삭제 등.
+- 사용자 정의 객체
+
+DOM(Document Object Model)
+- 웹페이지를 객체로 인식한다. 엘리먼트, 속성, 콘텐츠 모두가 객체가 된다.
+- 특정 객체를 찾는 탐색 과정이 필요하다. 엘리먼트 이름 기준, id 식별자(속성) 기준, name 식별자(속성) 기준, class 식별자(속성) 기준
+
+<Document Object Properties and Methods>
+document.activeElement	Returns the currently focused element in the document
+document.addEventListener()	Attaches an event handler to the document
+document.adoptNode()	Adopts a node from another document
+document.anchors	Returns a collection of all <a> elements in the document that have a name attribute
+document.applets	Returns a collection of all <applet> elements in the document
+document.baseURI	Returns the absolute base URI of a document
+document.body	Sets or returns the document's body (the <body> element)
+document.close()	Closes the output stream previously opened with document.open()
+document.cookie	Returns all name/value pairs of cookies in the document
+document.charset	Deprecated. Use document.characterSet instead. Returns the character encoding for the document
+document.characterSet	Returns the character encoding for the document
+document.createAttribute()	Creates an attribute node
+document.createComment()	Creates a Comment node with the specified text
+document.createDocumentFragment()	Creates an empty DocumentFragment node
+document.createElement()	Creates an Element node
+document.createTextNode()	Creates a Text node
+document.defaultView	Returns the window object associated with a document, or null if none is available.
+document.designMode	Controls whether the entire document is editable.
+document.doctype	Returns the Document Type Declaration associated with the document
+document.documentElement	Returns the Document Element of the document (the <html> element)
+document.documentMode	Returns the mode used by the browser to render the document
+document.documentURI	Sets or returns the location of the document
+document.domain	Returns the domain name of the server that loaded the document
+document.domConfig	Obsolete. Returns the DOM configuration of the document
+document.embeds	Returns a collection of all <embed> elements the document
+document.execCommand()	Invokes the specified clipboard operation (cut, copy or paste) on the element currently having focus.
+document.forms	Returns a collection of all <form> elements in the document
+document.getElementById()	Returns the element that has the ID attribute with the specified value
+document.getElementsByClassName()	Returns a NodeList containing all elements with the specified class name
+document.getElementsByName()	Returns a NodeList containing all elements with a specified name
+document.getElementsByTagName()	Returns a NodeList containing all elements with the specified tag name
+document.hasFocus()	Returns a Boolean value indicating whether the document has focus
+document.head	Returns the <head> element of the document
+document.images	Returns a collection of all <img> elements in the document
+document.implementation	Returns the DOMImplementation object that handles this document
+document.importNode()	Imports a node from another document
+document.inputEncoding	Returns the encoding, character set, used for the document
+document.lastModified	Returns the date and time the document was last modified
+document.links	Returns a collection of all <a> and <area> elements in the document that have a href attribute
+document.normalize()	Removes empty Text nodes, and joins adjacent nodes
+document.normalizeDocument()	Removes empty Text nodes, and joins adjacent nodes
+document.open()	Opens an HTML output stream to collect output from document.write()
+document.querySelector()	Returns the first element that matches a specified CSS selector(s) in the document
+document.querySelectorAll()	Returns a static NodeList containing all elements that matches a specified CSS selector(s) in the document
+document.readyState	Returns the (loading) status of the document
+document.referrer	Returns the URL of the document that loaded the current document
+document.removeEventListener()	Removes an event handler from the document (that has been attached with the addEventListener() method)
+document.renameNode()	Renames the specified node
+document.scripts	Returns a collection of <script> elements in the document
+document.strictErrorChecking	Sets or returns whether error-checking is enforced or not
+document.title	Sets or returns the title of the document
+document.URL	Returns the full URL of the HTML document
+document.write()	Writes HTML expressions or JavaScript code to a document
+document.writeln()
+ */
+
+/* Create an HTML element */
+/* 주의) 동적 생성된 엘리먼트 객체를 기존에 존재하는 엘리먼트의 자식으로 등록하지 않으면 웹페이지에 보이지 않게 된다.*/
+var btn = document.createElement("BUTTON");        // Create a <button> element
+var t = document.createTextNode("CLICK ME");       // Create a text node
+btn.appendChild(t);                                // Append the text to <button>.  <button>CLICK ME</button>
+// document.body.appendChild(btn);                 // Append <button> to <body>.	<body>...<button>CLICK ME</button>...</body>
+
+var pnode = document.getElementById("content");
+pnode.appendChild(btn);
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+
+/* Write into the HTML output stream */
+/* write(), writeln() 메소드 사용 */
+
+var popup = window.open("","popup","width=300, height=400");
+popup.document.writeln("<div>");
+popup.document.writeln("<button>Click Me</button>");
+popup.document.writeln("</div>");
+
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+		<button onclick="myFunction('White')">White</button>
+		<button onclick="myFunction('AntiqueWhite')">AntiqueWhite</button>
+		<button onclick="myFunction('HoneyDew')">HoneyDew</button>
+		<button onclick="myFunction('Lavender')">Lavender</button>
+		<button onclick="myFunction('Thistle')">Thistle</button>
+		<button onclick="myFunction('Wheat')">Wheat</button>
+	</div>
+<script>
+/* HTML DOM body Property */
+/* <body> 엘리먼트 반환하는 속성 */
+
+function myFunction(color){
+	/* <body style="background-color:yellow"> */
+	document.body.style.backgroundColor = color;
+}
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+<script src="util.js"></script>
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+/* Create a Cookie with JavaScript */
+/* 쿠키 정보 반환하는 속성 */
+
+/* util.js */
+
+/* 식별자가 고유한 경우만 여러개 항목 저장 가능 */
+setCookie("pcode/1001", "", 1);
+setCookie("pcode/1002", "", 1);
+
+/* 식별자는 같고, value만 다르면 덮어쓰기 */
+setCookie("pcode", "1003", 1);
+setCookie("pcode", "1004", 1);
+
+</script>
+</body>
+</html>
+```
+
+```javascript
+/* util.js / 0.01 */
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {	// 공백 섞인 경우 공백 제거
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {		// "cname=cvalue"부분인 경우
+            return c.substring(name.length, c.length);	// cvalue 값을 얻어온다.
+        }
+    }
+    return "";
+}
+
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+/* HTML DOM documentElement Property */
+/* <HTML> 엘리먼트 반환하는 속성 */
+/* nodeName 속성은 노드(엘리먼트)의 이름 반환하는 속성 */
+/* nodeName, nodeType, nodeValue 속성을 이용해서 노드 분석 */
+var x = document.documentElement.nodeName;
+console.log(x);
+
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+		<form id="myCarForm">
+			Favorite Car: <input type="text" name="fname" value="Volvo">
+		</form>
+
+		<form id="myColorForm">
+			Favorite Color: <input type="text" name="favcolor" value="Blue">
+		</form>
+
+		<p>Click the button to display the id of the first form element
+			(index 0) in the document.</p>
+
+		<button onclick="myFunction()">Try it</button>
+
+		<p id="demo"></p>
+	</div>
+<script>
+/* HTML DOM forms Property */
+/* <form> 엘리먼트(들) 반환하는 속성 */
+/* 컬렉션 반환시 특정 form 객체 탐색을 위해서 인덱스 사용. forms[인덱스], forms.item(인덱스), forms.nameItem("이름인덱스") */
+var x = document.forms[0].id;
+console.log(x);
+
+var x = document.forms.item(1).id;
+console.log(x);
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+		<img src="http://211.63.89.71:8090/resources/SampleImages/klematis_small.jpg" alt="klematis" style="width:200px">
+		<img src="http://211.63.89.71:8090/resources/SampleImages/klematis2_small.jpg" alt="klematis2" style="width:200px">
+		<img src="http://211.63.89.71:8090/resources/SampleImages/klematis3_small.jpg" alt="klematis3" style="width:200px">
+
+		<p id="demo"></p>
+	</div>
+<script>
+/* HTML DOM images Property */
+/* <img> 엘리먼트(들) 반환하는 속성 */
+/* 컬렉션 반환시 특정 form 객체 탐색을 위해서 인덱스 사용. images[인덱스], images.item(인덱스), images.nameItem("이름인덱스") */
+var x = document.images[0].src;
+console.log(x);
+
+var imgLen = document.images.length;
+for(var a=0; a<imgLen; ++a){
+var x = document.images.item(a).src;
+console.log(x);
+}
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+
+	<div id="content">
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+
+/* HTML DOM title Property */
+/* 현재 웹페이지의 제목 (<title>제목</title>) 반환하는 속성 */
+
+var x = document.title;
+console.log(x);
+</script>
+</body>
+</html>
+```
+
+
+
+### 3) Element Object Properties and Methods
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+<!-- 주의) 노드 탐색을 위해서 <div></div> 안에 자식 엘리먼트 추가시 줄바꿈 처리 삭제할 것 -->
+	<div id="content"><h1>자바스크립트 DOM(Document Object Model)</h1><p id="demo">결과 출력 예정</p></div>
+<script>
+/*
+자바스크립트 내장객체
+- 객체는 자바스크립트 프로그램의 대상이다.
+- 내장 객체는 자바스크립트가 기본적으로 제공하는 객체이다.
+- BOM(Browser Object Model)은 브라우저를 객체로 인식하고, 브라우저 자신을 프로그램으로 통제하는 방법. 예를 들어, 창 열기, 창 닫기.
+- DOM(Document Object Model)은 현재 메모리에 로딩되어 있는 웹페이지를 객체로 인식하고, 웹페이지 자신을 프로그램으로 통제하는 방법. 예를 들어, 페이지 내의 특정 콘텐츠에 대한 수정, 삭제 등.
+- 사용자 정의 객체
+
+DOM(Document Object Model)
+- 웹페이지를 객체로 인식한다. 엘리먼트, 속성, 콘텐츠 모두가 객체가 된다.
+- 특정 객체를 찾는 탐색 과정이 필요하다. 엘리먼트 이름 기준, id 식별자(속성) 기준, name 식별자(속성) 기준, class 식별자(속성) 기준
+
+
+<Element Object Properties and Methods>
+element.accessKey	Sets or returns the accesskey attribute of an element
+element.addEventListener()	Attaches an event handler to the specified element
+element.appendChild()	Adds a new child node, to an element, as the last child node
+element.attributes	Returns a NamedNodeMap of an element's attributes
+element.blur()	Removes focus from an element
+element.childElementCount	Returns the number of child elements an element has
+element.childNodes	Returns a collection of an element's child nodes (including text and comment nodes)
+element.children	Returns a collection of an element's child element (excluding text and comment nodes)
+element.classList	Returns the class name(s) of an element
+element.className	Sets or returns the value of the class attribute of an element
+element.click()	Simulates a mouse-click on an element
+element.clientHeight	Returns the height of an element, including padding
+element.clientLeft	Returns the width of the left border of an element
+element.clientTop	Returns the width of the top border of an element
+element.clientWidth	Returns the width of an element, including padding
+element.cloneNode()	Clones an element
+element.compareDocumentPosition()	Compares the document position of two elements
+element.contains()	Returns true if a node is a descendant of a node, otherwise false
+element.contentEditable	Sets or returns whether the content of an element is editable or not
+element.dir	Sets or returns the value of the dir attribute of an element
+element.firstChild	Returns the first child node of an element
+element.firstElementChild	Returns the first child element of an element
+element.focus()	Gives focus to an element
+element.getAttribute()	Returns the specified attribute value of an element node
+element.getAttributeNode()	Returns the specified attribute node
+element.getElementsByClassName()	Returns a collection of all child elements with the specified class name
+element.getElementsByTagName()	Returns a collection of all child elements with the specified tag name
+element.getFeature()	Returns an object which implements the APIs of a specified feature
+element.hasAttribute()	Returns true if an element has the specified attribute, otherwise false
+element.hasAttributes()	Returns true if an element has any attributes, otherwise false
+element.hasChildNodes()	Returns true if an element has any child nodes, otherwise false
+element.id	Sets or returns the value of the id attribute of an element
+element.innerHTML	Sets or returns the content of an element
+element.insertBefore()	Inserts a new child node before a specified, existing, child node
+element.isContentEditable	Returns true if the content of an element is editable, otherwise false
+element.isDefaultNamespace()	Returns true if a specified namespaceURI is the default, otherwise false
+element.isEqualNode()	Checks if two elements are equal
+element.isSameNode()	Checks if two elements are the same node
+element.isSupported()	Returns true if a specified feature is supported on the element
+element.lang	Sets or returns the value of the lang attribute of an element
+element.lastChild	Returns the last child node of an element
+element.lastElementChild	Returns the last child element of an element
+element.namespaceURI	Returns the namespace URI of an element
+element.nextSibling	Returns the next node at the same node tree level
+element.nextElementSibling	Returns the next element at the same node tree level
+element.nodeName	Returns the name of a node
+element.nodeType	Returns the node type of a node
+element.nodeValue	Sets or returns the value of a node
+element.normalize()	Joins adjacent text nodes and removes empty text nodes in an element
+element.offsetHeight	Returns the height of an element, including padding, border and scrollbar
+element.offsetWidth	Returns the width of an element, including padding, border and scrollbar
+element.offsetLeft	Returns the horizontal offset position of an element
+element.offsetParent	Returns the offset container of an element
+element.offsetTop	Returns the vertical offset position of an element
+element.ownerDocument	Returns the root element (document object) for an element
+element.parentNode	Returns the parent node of an element
+element.parentElement	Returns the parent element node of an element
+element.previousSibling	Returns the previous node at the same node tree level
+element.previousElementSibling	Returns the previous element at the same node tree level
+element.querySelector()	Returns the first child element that matches a specified CSS selector(s) of an element
+element.querySelectorAll()	Returns all child elements that matches a specified CSS selector(s) of an element
+element.removeAttribute()	Removes a specified attribute from an element
+element.removeAttributeNode()	Removes a specified attribute node, and returns the removed node
+element.removeChild()	Removes a child node from an element
+element.removeEventListener()	Removes an event handler that has been attached with the addEventListener() method
+element.replaceChild()	Replaces a child node in an element
+element.scrollHeight	Returns the entire height of an element, including padding
+element.scrollIntoView()	Scrolls the specified element into the visible area of the browser window
+element.scrollLeft	Sets or returns the number of pixels an element's content is scrolled horizontally
+element.scrollTop	Sets or returns the number of pixels an element's content is scrolled vertically
+element.scrollWidth	Returns the entire width of an element, including padding
+element.setAttribute()	Sets or changes the specified attribute, to the specified value
+element.setAttributeNode()	Sets or changes the specified attribute node
+element.style	Sets or returns the value of the style attribute of an element
+element.tabIndex	Sets or returns the value of the tabindex attribute of an element
+element.tagName	Returns the tag name of an element
+element.textContent	Sets or returns the textual content of a node and its descendants
+element.title	Sets or returns the value of the title attribute of an element
+element.toString()	Converts an element to a string
+ 	 
+nodelist.item()	Returns the node at the specified index in a NodeList
+nodelist.length	Returns the number of nodes in a NodeList
+ */
+
+/* DOM Navigation (인접 관계 선택자) 
+웹페이지의 엘리먼트가 모두 부모, 자식 관계가 있으므로 관계를 이용해서 탐색하는 방법 
+parentNode
+childNodes[nodenumber]
+firstChild
+lastChild
+nextSibling
+previousSibling
+*/
+
+/* <div id="content"> 엘리먼트를 최상위 부모 엘리먼트로 지정 */
+var parent = document.querySelector("div#content");
+
+/* 주의) 줄바꿈 문자는 text Node로 처리된다. */
+var x = parent.childNodes;
+console.log(x);
+console.log(x[0].nodeName);
+console.log(x.item(0).nodeName);
+console.log(parent.firstChild.nodeName);
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+<!-- 주의) 노드 탐색을 위해서 <div></div> 안에 자식 엘리먼트 추가시 줄바꿈 처리 삭제할 것 -->
+	<div id="content">
+	<h1>자바스크립트 DOM(Document Object Model)</h1>
+	<p id="demo">결과 출력 예정</p>
+	</div>
+<script>
+/* DOM Navigation (인접 관계 선택자) 
+웹페이지의 엘리먼트가 모두 부모, 자식 관계가 있으므로 관계를 이용해서 탐색하는 방법 
+parentNode
+childNodes[nodenumber]
+firstChild
+lastChild
+nextSibling
+previousSibling
+*/
+
+/* <div id="content"> 엘리먼트를 최상위 부모 엘리먼트로 지정 */
+var parent = document.querySelector("div#content");
+
+/* children 속성은 자식 '엘리먼트' 노드만 반환하는 속성 */
+/* 주의) children 속성은 IE9 이상에서만 사용 가능. text Node는 */
+var x = parent.children;
+console.log(x);
+console.log(x[0].nodeName);
+console.log(x.item(0).nodeName);
+console.log(parent.firstElementChild.nodeName);
+console.log(parent.firstChild.nodeName);
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+</head>
+<body>
+<!-- 주의) 노드 탐색을 위해서 <div></div> 안에 자식 엘리먼트 추가시 줄바꿈 처리 삭제할 것 -->
+	<div id="content">
+	<h1>자바스크립트 DOM(Document Object Model)</h1>
+	<p id="demo">결과 출력 예정1</p>
+	<p>결과 출력 예정2</p>
+	<p>결과 출력 예정3</p>
+	</div>
+<script>
+/* DOM Navigation (인접 관계 선택자) 
+웹페이지의 엘리먼트가 모두 부모, 자식 관계가 있으므로 관계를 이용해서 탐색하는 방법 
+parentNode
+parentElement
+childNodes[nodenumber]
+children
+firstChild
+firstElementChild
+lastChild
+lastElementChild
+nextSibling
+nextElementSibling
+previousSibling
+previousElementSibling
+
+*/
+
+/* <div id="content"> 엘리먼트를 최상위 부모 엘리먼트로 지정 */
+var parent = document.querySelector("div#content");
+
+/* nextSibling 속성은 형제 노드 반환하는 속성 */
+/* 주의) 줄바꿈 문자는 text Node로 처리된다. */
+/* 주의) nextElementSibling 속성은 IE9 이상에서만 사용 가능. text Node는 탐색 대상에서 제외된다. */
+var x = parent.querySelector("#demo");				// 기준점
+console.log(x.nextSibling.nodeName);				// text (Enter키)
+console.log(x.nextSibling.nextSibling.nodeName);	// p태그
+console.log(x.nextSibling.nextSibling.innerHTML);	// p태그
+console.log(x.nextElementSibling.nodeName);			// p태그
+console.log(x.nextElementSibling.innerHTML);		// p태그
+</script>
+</body>
+</html>
+```
+
+```javascript
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SIST_쌍용교육센터</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+	<h1>자바스크립트 DOM(Document Object Model)</h1>
+	<p id="demo">결과 출력 예정</p>
+</div>
+
+<script>
+/* DOM Navigation (인접 관계 선택자) */
+/* 웹페이지의 엘리먼트가 모두 부모, 자식 관계가 있으므로 관계를 이용해서 탐색하는 방법 */
+/*
+parentNode
+parentElement
+childNodes[nodenumber]
+children
+firstChild
+firstElementChild
+lastChild
+lastElementChild
+nextSibling
+nextElementSibling
+previousSibling
+previousElementSibling
+*/
+
+/* <div id="content"> 엘리먼트를 최상위 부모 엘리먼트로 지정 */
+var parent = document.querySelector("div#content");
+
+/* parentNode 속성은 부모 노드 반환하는 속성 */
+/* 주의) parentNode 속성의 반환값은 부모 엘리먼트 노드이다. */
+/* 주의) parentElement 속성의 반환값은 부모 엘리먼트이다. */
+var x = parent.querySelector("#demo");
+console.log(x.nodeName);
+console.log(x.parentNode.nodeName);
+console.log(x.parentElement.nodeName);
+
 
 </script>
 </body>
