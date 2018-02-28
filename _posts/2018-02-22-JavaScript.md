@@ -5400,3 +5400,439 @@ function mySample2() {
 </html>
 ```
 
+
+
+# Object
+
+## 1. 형식
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+/* 
+자바스크립트 사용자 정의 객체(JavaScript Object)
+- 사용자가 직접 정의한 객체
+- 객체는 자바스크립트 프로그램의 대상이다.
+- 내장 객체는 자바스크립트가 기본적으로 제공하는 객체이다.
+- BOM(Browser Object Model)은 브라우저를 객체로 인식하고, 브라우저 자신을 프로그램으로 통제하는 방법. 예를 들어, 창 열기, 창 닫기.
+- DOM(Document Object Model)은 현재 메모리에 로딩되어 있는 웹페이지를 객체로 인식하고, 웹페이지 자신을 프로그램으로 통제하는 방법. 예를 들어, 페이지 내의 특정 콘텐츠에 대한 수정, 삭제 등.
+- 사용자 정의 객체
+
+- 형식
+1. Object Literal
+2. Keyword new
+3. Constructor
+
+- 프로퍼티 접근 형식
+1. objectName.property          // person.age
+2. objectName["property"]       // person["age"]
+3. objectName[expression]       // x = "age"; person[x]
+
+- 메소드 형식
+- 사용자 정의 객체에 메소드 추가시 프로퍼티 value 부분에 익명함수 지정.
+- 예를 들어, function() {return this.firstName + " " + this.lastName;}
+
+주의) 프로퍼티는 동적 추가, 삭제 가능
+ */
+ 
+ 
+ /* Using an Object Literal */
+ /* {key:value, ...} */
+ /* key는 식별자로 작성되며 property가 된다. value는 primitive data type(String, number, boolean, null, undefined) 사용 */
+ /* 하위 항목 접근은 .(dot) 연산자 사용 */
+ 
+ /* Object 객체 */
+ var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+ console.log(typeof person);
+ console.log(person);
+ console.log(person.firstName);
+ console.log(person.lastName);
+ console.log(person.age);
+ console.log(person.eyeColor);
+ 
+ /* 배열 객체 */
+ var personArray = ["John", "Doe", 50, "blue"];
+ console.log(typeof personArray);
+ console.log(personArray);
+ for(var a=0; a<personArray.length; ++a){
+	 console.log(personArray[a]);
+ }
+ 
+ 
+ document.getElementById("demo").innerHTML = person.firstName + " " + person.lastName + "<br>" + person.age + "<br>" + person.eyeColor;
+ 
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+ /* Using the JavaScript Keyword new */
+ /* new Object() */
+ 
+ /* Object 객체 */
+ var person = new Object();
+ 
+ /* 객체의 프로퍼티는 읽기, 쓰기 가능 */
+ person.firstName = "John";
+ person.lastName = "Doe";
+ person.age = 50;
+ person.eyeColor = "blue";
+ console.log(typeof person);
+ console.log(person);
+ console.log(person.firstName);
+ console.log(person.lastName);
+ console.log(person.age);
+ console.log(person.eyeColor);
+
+ 
+ 
+ document.getElementById("demo").innerHTML = person.firstName + " " + person.lastName + "<br>" + person.age + "<br>" + person.eyeColor;
+ 
+
+ /* 프로퍼티 동적 추가 */
+ person.nationality = "English";
+ 
+  /* 프로퍼티 동적 삭제 */
+delete person.age; 
+
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+ var person = {
+		    firstName: "John",
+		    lastName : "Doe",
+		    id       : 5566,
+		    fullName : function() {
+		       return this.firstName + " " + this.lastName;
+		    }
+		};
+ 
+ console.log(person);
+ console.log(person.firstName);
+ console.log(person.lastName);
+ console.log(person.id);
+ console.log(person.fullName);
+ console.log(person.fullName());
+ 
+ /* 메소드 동적 추가 */
+ person.name = function(){return this.firstName + " + " + this.lastName};
+ 
+ /* 메소드 동적 삭제 */
+ delete person.fullName;
+
+</script>
+</body>
+</html>
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+ /* JavaScript Object Constructors */
+ /* 구조(항목 구성)가 동일한 객체를 생성할 수 있는 생성자 준비 */
+ /* new 키워드로 동일한 구조를 가진 여러개의 객체 생성 가능 */
+  
+ /* 식별자 첫 글자를 대문자로 표기 */
+ /* 매개변수에 외부에서 전달받을 값에 대한 변수 지정 */
+ function Person(first, last, age, eye) {
+		/* (프로퍼티) 멤버에 대한 초기화 과정 */
+	    this.firstName = first;
+	    this.lastName = last;
+	    this.age = age;
+	    this.eyeColor = eye;
+	}
+	
+ /* 준비된 생성자를 이용해서 객체 생성 */
+var myPerson = new Person('Jiyoung', 'Yoon', '26', 'brown');
+console.log(myPerson.firstName);
+console.log(myPerson.lastName);
+console.log(myPerson.age);
+console.log(myPerson.eyeColor);
+
+
+var yourPerson = new Person('Siwan', 'Lim', '29', 'black');
+
+
+console.log(myPerson);
+console.log(yourPerson);
+
+ /* 주의) 프로퍼티 구성에 대해 동적 추가, 삭제 가능 */
+ 
+</script>
+</body>
+</html>
+```
+
+
+
+## 2. prototypes
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+/* 
+자바스크립트 사용자 정의 객체(JavaScript Object)
+- 사용자가 직접 정의한 객체
+- 객체는 자바스크립트 프로그램의 대상이다.
+- 내장 객체는 자바스크립트가 기본적으로 제공하는 객체이다.
+- BOM(Browser Object Model)은 브라우저를 객체로 인식하고, 브라우저 자신을 프로그램으로 통제하는 방법. 예를 들어, 창 열기, 창 닫기.
+- DOM(Document Object Model)은 현재 메모리에 로딩되어 있는 웹페이지를 객체로 인식하고, 웹페이지 자신을 프로그램으로 통제하는 방법. 예를 들어, 페이지 내의 특정 콘텐츠에 대한 수정, 삭제 등.
+- 사용자 정의 객체
+
+- 형식
+1. Object Literal
+2. Keyword new
+3. Constructor
+
+ */
+ 
+ /* JavaScript Object Constructors */
+ /* 구조(항목 구성)가 동일한 객체를 생성할 수 있는 생성자 준비 */
+ /* new 키워드로 동일한 구조를 가진 여러개의 객체 생성 가능 */
+ 
+ /* 식별자 첫 글자를 대문자로 표기 */
+ /* 매개변수에 외부에서 전달받을 값에 대한 변수 지정 */
+ function Person(first, last) {
+		/* (프로퍼티) 멤버에 대한 초기화 과정 */
+	    this.firstName = first;
+	    this.lastName = last;
+	}
+	
+var myPerson1 = new Person("John", "Doe");
+console.log(myPerson1);
+
+var myPerson2 = new Person("Sally", "Rally");
+
+/* 프로퍼티 동적 추가 */
+ myPerson2.nationlality = "English";
+ console.log(myPerson2);
+ 
+ 
+</script>
+</body>
+</html>
+
+```
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jiyoung's Test</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="content">
+
+		<h1>자바스크립트 DOM(Document Object Model)</h1>
+		<p id="demo">결과 출력 예정</p>
+
+</div>
+<script>
+          
+ function Person(first, last) {
+		/* (프로퍼티) 멤버에 대한 초기화 과정 */
+	    this.firstName = first;
+	    this.lastName = last;
+	}
+
+
+/* 프로퍼티 정적 추가 */
+ Person.prototype.nationality = "English";
+ 
+ 
+ var myPerson1 = new Person("John", "Doe");
+ var myPerson2 = new Person("Sally", "Rally");
+ 
+ console.log(myPerson1);
+ console.log(myPerson2);
+ console.log(myPerson1.nationality);
+ 
+</script>
+</body>
+</html>
+
+```
+
+```javascript
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SIST_쌍용교육센터</title>
+
+<style>
+
+div#content {
+	width: 1080px;
+	margin: auto;
+}
+
+</style>
+
+<script>
+
+</script>
+</head>
+<body>
+
+<div id="content">
+	<h1>자바스크립트 Objects</h1>
+	<p id="demo">결과 출력 예정</p>
+</div>
+
+<script>
+/* JavaScript Object Prototypes */
+/* 객체의 원형 정보를 반환하는 프로퍼티 */
+/* 객체를 상속 받아서 프로퍼티, 메소드에 대한 정적 추가 가능 */
+
+var txt = "Test";
+console.log(txt);
+console.log(txt.toString());
+console.log(txt.toUpperCase());
+console.log(txt.toLowerCase());
+
+/* String 객체에 메소드 정적 추가 */
+String.prototype.test = function() { return "[" + this.toString() + "]"; };
+console.log(txt.test());
+
+</script>
+</body>
+</html>
+```
+

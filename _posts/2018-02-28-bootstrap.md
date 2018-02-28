@@ -1,0 +1,85 @@
+---
+layout: post
+title: "Bootstrap"
+description: "Bootstrap"
+categories: [Bootstrap]
+tags: []
+redirect_from:
+  - /2018/02/28/
+---
+
+
+
+# 기본 템플릿
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Modal -->
+<div id="myModal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">로그인</h4>
+        <p>정상적인 서비스 이용을 위해서 로그인이 필요합니다</p>
+      </div>
+      <div class="modal-body">
+        <form action="/action_page.php">
+		  <div class="form-group">
+		    <label for="email">ID:</label>
+		    <input type="email" class="form-control" id="email">
+		  </div>
+		  <div class="form-group">
+		    <label for="pwd">PW:</label>
+		    <input type="password" class="form-control" id="pwd">
+		  </div>
+		  <div class="checkbox">
+		    <label><input type="checkbox"> Remember me</label>
+		  </div>
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+</div>
+</body>
+</html>
+```
+
