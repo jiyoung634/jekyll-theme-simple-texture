@@ -83,3 +83,1236 @@ $(document).ready(function() {
 </html>
 ```
 
+
+
+# Grid
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+
+		<h1>Bootstrap Grid</h1>
+		<div class="row">
+			<div class="col-*-*">1</div>
+			<div class="col-*-*">2</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">col-sm-4</div>
+			<div class="col-sm-4">col-sm-4</div>
+			<div class="col-sm-4">col-sm-4</div>
+		</div>
+
+	</div>
+</body>
+</html>
+```
+
+
+
+# Typography
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+		<div>
+			<h1>Text/Typography</h1>
+			<h1>h1 Bootstrap heading (36px)</h1>
+			<h2>h2 Bootstrap heading (30px)</h2>
+			<h3>h3 Bootstrap heading (24px)</h3>
+			<h4>h4 Bootstrap heading (18px)</h4>
+			<h5>h5 Bootstrap heading (14px)</h5>
+			<h6>h6 Bootstrap heading (12px)</h6>
+		</div>
+		
+		<div>
+			<h1>h1 heading <small>secondary text</small></h1>
+		</div>
+
+		<div>
+			<h1>Code Snippets</h1>
+			<p>
+				The following HTML elements:
+				<code>span</code>
+				,
+				<code>section</code>
+				, and
+				<code>div</code>
+				defines a section in a document.
+			</p>
+		</div>
+
+		<div>
+			<h1>Keyboard Inputs</h1>
+			<p>
+				Use
+				<kbd>ctrl + p</kbd>
+				to open the Print dialog box.
+			</p>
+		</div>
+
+		<div>
+			<h1>Multiple Code Lines</h1>
+			<pre>
+			Text in a pre element
+			is displayed in a fixed-width
+			font, and it preserves
+			both      spaces and
+			line breaks.
+			</pre>
+		</div>
+
+		<div>
+			<p class="bg-success">This text indicates success.</p>
+		</div>
+
+	</div>
+</body>
+</html>
+```
+
+
+
+# Tables
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h2>Basic Table</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
+```
+
+
+
+# Images
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h2>Image Gallery</h2>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<img src="img_forest.jpg" alt="forest" style="width: 100%">
+					<div class="caption">
+						<p>forest...</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<img src="img_lights.jpg" alt="lights" style="width: 100%">
+					<div class="caption">
+						<p>lights...</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="thumbnail">
+					<img src="img_fjords.jpg" alt="fjords" style="width: 100%">
+					<div class="caption">
+						<p>fjords...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+```
+
+
+
+# Alert
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+
+		<div class="alert alert-success alert-dismissible">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>Success!</strong> Indicates a successful or positive action.
+		</div>
+
+</div>
+</body>
+</html>
+```
+
+
+
+
+
+# Buttons
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<h1>Bootstrap Buttons</h1>
+	<div style="margin-bottom:30px">
+		<button type="button" class="btn btn-default">회원가입</button>
+		<button type="button" class="btn btn-default">상세보기</button>
+		<button type="button" class="btn btn-default">글쓰기</button>
+	</div>
+	
+	<div style="margin-bottom:30px">
+		<button type="button" class="btn btn-default btn-sm">회원가입</button>
+		<button type="button" class="btn btn-default btn-sm">상세보기</button>
+		<button type="button" class="btn btn-default btn-sm">글쓰기</button>
+	</div>
+	
+	<div class="btn-group" style="margin-bottom:30px">
+		<button type="button" class="btn btn-default btn-sm">회원가입</button>
+		<button type="button" class="btn btn-default btn-sm">상세보기</button>
+		<button type="button" class="btn btn-default btn-sm">글쓰기</button>
+	</div>
+	
+	<div style="margin-bottom:30px">
+		<button type="button" class="btn btn-default btn-sm btn-block">로그인</button>
+	</div>
+	
+	<h2>Basic Table</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td><button type="button" class="btn btn-default btn-sm btn-block">Delete</button></td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+					<td><button type="button" class="btn btn-default btn-sm btn-block">Delete</button></td>					
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+					<td><button type="button" class="btn btn-default btn-sm btn-block disabled">Delete</button></td>					
+				</tr>
+			</tbody>
+		</table>
+</div>
+</body>
+</html>
+```
+
+
+
+# Glyphicons
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Glyphicons</h1>
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-search"></span> Search
+		</button>
+
+	</div>
+</body>
+</html>
+```
+
+
+
+# Badges
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	
+});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Badges</h1>
+		<div>
+			<button type="button" class="btn btn-default">Primary <span class="badge">7</span></button>
+		</div>
+		
+		
+		<h2>Basic Table</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+					<th>수강신청회수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>John</td>
+					<td>Doe</td>
+					<td>john@example.com</td>
+					<td><span class="badge">2</span></td>
+				</tr>
+				<tr>
+					<td>Mary</td>
+					<td>Moe</td>
+					<td>mary@example.com</td>
+					<td><span class="badge">1</span></td>					
+				</tr>
+				<tr>
+					<td>July</td>
+					<td>Dooley</td>
+					<td>july@example.com</td>
+					<td><span class="badge">3</span></td>					
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<button type="button" class="btn btn-default">Total Count <span class="badge">6</span></button>
+		</div>
+	</div>
+	
+</body>
+</html>
+```
+
+
+
+# Progress Bars
+
+```html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SIST_쌍용교육센터</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+	$(document).ready(function() {
+
+		// jQuery methods go here...
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Bootstrap Progress Bars</h1>
+		<div>
+			<h3>2018.01~2018.05</h3>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>과목명</th>
+						<th>기간</th>
+						<th>강사</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Java SE</td>
+						<td>2018.01~2018.02</td>
+						<td>john@example.com</td>
+					</tr>
+					<tr>
+						<td>Oracle</td>
+						<td>2018.02~2018.02</td>
+						<td>mary@example.com</td>
+					</tr>
+					<tr>
+						<td>JDBC</td>
+						<td>2018.02~2018.03</td>
+						<td>july@example.com</td>
+					</tr>
+					<tr>
+						<td>Project</td>
+						<td>2018.03~2018.05</td>
+						<td>july@example.com</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="progress">
+			<div class="progress-bar progress-bar-success" role="progressbar"
+				style="width: 40%">Java SE</div>
+			<div class="progress-bar progress-bar-warning" role="progressbar"
+				style="width: 20%">Oracle</div>
+			<div class="progress-bar progress-bar-danger" role="progressbar"
+				style="width: 10%">JDBC</div>
+			<div class="progress-bar progress-bar-info" role="progressbar"
+				style="width: 30%">Project</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
+```
+
+
+
+# Panels
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Bootstrap Panels</h1>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><h4>2018.01~2018.05</h4></div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Firstname</th>
+							<th>Lastname</th>
+							<th>Email</th>
+							<th>수강신청회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>John</td>
+							<td>Doe</td>
+							<td>john@example.com</td>
+							<td><span class="badge">2</span></td>
+						</tr>
+						<tr>
+							<td>Mary</td>
+							<td>Moe</td>
+							<td>mary@example.com</td>
+							<td><span class="badge">1</span></td>
+						</tr>
+						<tr>
+							<td>July</td>
+							<td>Dooley</td>
+							<td>july@example.com</td>
+							<td><span class="badge">3</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
+```
+
+
+
+# Collapse
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Basic Collapse</h1>
+		<div>
+			<h3>2018.01~2018.05</h3>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>과목명</th>
+						<th>기간</th>
+						<th>강사</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Java SE
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo">과목설명</button>
+							<div id="demo" class="collapse">Java입니다</div>
+						</td>
+						<td>2018.01~2018.02</td>
+						<td>john@example.com</td>
+					</tr>
+					<tr>
+						<td>Oracle
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo2">과목설명</button>
+							<div id="demo2" class="collapse">Oracle입니다</div>
+						</td>
+						<td>2018.02~2018.02</td>
+						<td>mary@example.com</td>
+					</tr>
+					<tr>
+						<td>JDBC
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo3">과목설명</button>
+							<div id="demo3" class="collapse">JDBC입니다</div>
+						</td>
+						<td>2018.02~2018.03</td>
+						<td>july@example.com</td>
+					</tr>
+					<tr>
+						<td>Project
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo4">과목설명</button>
+							<div id="demo4" class="collapse">Prjoject입니다</div>								
+						</td>
+						<td>2018.03~2018.05</td>
+						<td>july@example.com</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</body>
+</html>
+```
+
+
+
+# Tabs
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Tabs</h1>
+
+		<h3> 강사 강의 일정 </h3>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="design014_1.html">예정</a></li>
+			<li><a href="design014_2.html">진행</a></li>
+			<li><a href="design014_3.html">종료</a></li>
+		</ul>
+		
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>과목명</th>
+						<th>기간</th>
+						<th>강사</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>JDBC
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo3">과목설명</button>
+							<div id="demo3" class="collapse">JDBC입니다</div>
+						</td>
+						<td>2018.02~2018.03</td>
+						<td>july@example.com</td>
+					</tr>
+					<tr>
+						<td>Project
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo4">과목설명</button>
+							<div id="demo4" class="collapse">Prjoject입니다</div>								
+						</td>
+						<td>2018.03~2018.05</td>
+						<td>july@example.com</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Tabs</h1>
+
+		<h3> 강사 강의 일정 </h3>
+		<ul class="nav nav-tabs">
+			<li><a href="design014_1.html">예정</a></li>
+			<li class="active"><a href="design014_2.html">진행</a></li>
+			<li><a href="design014_3.html">종료</a></li>
+		</ul>
+		
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>과목명</th>
+						<th>기간</th>
+						<th>강사</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Oracle
+							<button type="button" class="btn btn-xs" data-toggle="collapse"
+								data-target="#demo2">과목설명</button>
+							<div id="demo2" class="collapse">Oracle입니다</div>
+						</td>
+						<td>2018.02~2018.02</td>
+						<td>mary@example.com</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Tabs</h1>
+
+		<h3>강사 강의 일정</h3>
+		<ul class="nav nav-tabs">
+			<li><a href="design014_1.html">예정</a></li>
+			<li><a href="design014_2.html">진행</a></li>
+			<li class="active"><a href="design014_3.html">종료</a></li>
+		</ul>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>과목명</th>
+					<th>기간</th>
+					<th>강사</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Java SE
+						<button type="button" class="btn btn-xs" data-toggle="collapse"
+							data-target="#demo">과목설명</button>
+						<div id="demo" class="collapse">Java입니다</div>
+					</td>
+					<td>2018.01~2018.02</td>
+					<td>john@example.com</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
+```
+
+
+
+# Toggleable / Dynamic Tabs
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Toggleable / Dynamic Tabs</h1>
+		<ul class="nav nav-pills">
+			<li class="active"><a data-toggle="pill" href="#schedule1">예정</a></li>
+			<li><a data-toggle="pill" href="#schedule2">진행</a></li>
+			<li><a data-toggle="pill" href="#schedule3">종료</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="#schedule1" class="tab-pane fade in active">
+				<h3>예정</h3>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>과목명</th>
+							<th>기간</th>
+							<th>강사</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>JDBC
+								<button type="button" class="btn btn-xs" data-toggle="collapse"
+									data-target="#demo3">과목설명</button>
+								<div id="demo3" class="collapse">JDBC입니다</div>
+							</td>
+							<td>2018.02~2018.03</td>
+							<td>july@example.com</td>
+						</tr>
+						<tr>
+							<td>Project
+								<button type="button" class="btn btn-xs" data-toggle="collapse"
+									data-target="#demo4">과목설명</button>
+								<div id="demo4" class="collapse">Prjoject입니다</div>
+							</td>
+							<td>2018.03~2018.05</td>
+							<td>july@example.com</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="schedule2" class="tab-pane fade">
+				<h3>진행</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>과목명</th>
+							<th>기간</th>
+							<th>강사</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Oracle
+								<button type="button" class="btn btn-xs" data-toggle="collapse"
+									data-target="#demo2">과목설명</button>
+								<div id="demo2" class="collapse">Oracle입니다</div>
+							</td>
+							<td>2018.02~2018.02</td>
+							<td>mary@example.com</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="schedule3" class="tab-pane fade">
+				<h3>종료</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>과목명</th>
+							<th>기간</th>
+							<th>강사</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Java SE
+								<button type="button" class="btn btn-xs" data-toggle="collapse"
+									data-target="#demo">과목설명</button>
+								<div id="demo" class="collapse">Java입니다</div>
+							</td>
+							<td>2018.01~2018.02</td>
+							<td>john@example.com</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+```
+
+
+
+# Navigation Bar & Dropdown
+
+```html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SIST_쌍용교육센터</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+	$(document).ready(function() {
+
+		// jQuery methods go here...
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Navigation Bar</h1>
+
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">SIST</a>
+				</div>
+				<ul class="nav navbar-nav">
+
+					<li class="dropdown active"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">기초정보관리<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">과정명관리</a></li>
+							<li><a href="#">과목명관리</a></li>
+							<li><a href="#">강의실관리</a></li>
+							<li><a href="#">교재명관리</a></li>
+						</ul></li>
+
+					<li><a href="#">강사관리</a></li>
+					<li><a href="#">개설과정관리</a></li>
+					<li><a href="#">개설과목관리</a></li>
+					<li><a href="#">수강생관리</a></li>
+					<li><a href="#">성적조회</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+							홍길동(매니저)</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
+							Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+
+	</div>
+
+</body>
+</html>
+```
+
+
+
+# 
