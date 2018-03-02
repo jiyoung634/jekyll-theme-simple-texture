@@ -3,7 +3,7 @@ layout: post
 title: "Bootstrap"
 description: "Bootstrap"
 categories: [Bootstrap]
-tags: []
+tags: [Bootstrap]
 redirect_from:
   - /2018/02/28/
 ---
@@ -1315,4 +1315,521 @@ $(document).ready(function() {
 
 
 
-# 
+# Forms
+
+```html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SIST_쌍용교육센터</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+	$(document).ready(function() {
+
+		// jQuery methods go here...
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Bootstrap Forms</h1>
+
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">SIST</a>
+				</div>
+				<ul class="nav navbar-nav">
+
+					<li class="dropdown active"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">기초정보관리<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">과정명관리</a></li>
+							<li><a href="#">과목명관리</a></li>
+							<li><a href="#">강의실관리</a></li>
+							<li><a href="#">교재명관리</a></li>
+						</ul></li>
+
+					<li><a href="#">강사관리</a></li>
+					<li><a href="#">개설과정관리</a></li>
+					<li><a href="#">개설과목관리</a></li>
+					<li><a href="#">수강생관리</a></li>
+					<li><a href="#">성적조회</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+							홍길동(매니저)</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>
+							Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<ul class="breadcrumb">
+			<li>Home</li>
+			<li>기초 정보 관리</li>
+			<li class="active">과정명 관리</li>
+		</ul>
+		<div class="panel panel-default">
+			<div class="panel-heading">과정 관리 입력</div>
+			<div class="panel-body">
+
+				<form>
+					<div class="form-group">
+						<label for="octitle">과정명:</label> <input type="text"
+							class="form-control" id="octitle">
+						<span class="help-block">This is some help text...</span>							
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">과정 관리 출력</div>
+			<div class="panel-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>과정ID</th>
+							<th>과정명</th>
+							<th>수정/삭제</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>OC001</td>
+							<td>자바 전문가</td>
+							<td><button type="button" class="btn btn-xs btn-default">update</button>/
+								<button type="button" class="btn btn-xs btn-default disabled">delete</button></td>
+						</tr>
+						<tr>
+							<td>OC002</td>
+							<td>오라클 전문가</td>
+							<td><button type="button" class="btn btn-xs btn-default">update</button>/
+								<button type="button" class="btn btn-xs btn-default">delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
+```
+
+
+
+# Carousel
+
+```html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>SIST_쌍용교육센터</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+	$(document).ready(function() {
+
+		// jQuery methods go here...
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Bootstrap Carousel Plugin</h1>
+
+		<h3>프로젝트 결과</h3>
+
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<img src="la.jpg" alt="Los Angeles">
+				</div>
+
+				<div class="item">
+					<img src="chicago.jpg" alt="Chicago">
+				</div>
+
+				<div class="item">
+					<img src="ny.jpg" alt="New York">
+				</div>
+			</div>
+
+			<!-- Left and right controls -->
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span> <span
+				class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right"></span> <span
+				class="sr-only">Next</span>
+			</a>
+		</div>
+
+	</div>
+
+</body>
+</html>
+
+
+```
+
+
+
+# Modal
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body>
+
+	<div class="container">
+
+		<!-- Trigger the modal with a button -->
+		<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+			data-target="#myModal">Open Modal</button>
+	</div>
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<div class="media">
+						<div class="media-left">
+							<img src="https://www.w3schools.com/bootstrap/img_avatar1.png" class="media-object"
+								style="width: 60px">
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">홍길동</h4>
+							<p>등급: 매니저</p>
+							<p>전화: 010-1234-1234</p>
+							<p>이메일: hong@naver.com</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+</html>
+```
+
+
+
+# Tooltip
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$('[data-toggle="modal"]').tooltip();
+	});
+</script>
+
+</head>
+<body>
+
+
+	<div class="container">
+		<h3>Tooltip Example</h3>
+		<a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal" title=":D">홍길동(매니저)</a>
+	</div>
+	
+		<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">개인 정보</h4>
+				</div>
+				<div class="modal-body">
+					<div class="media">
+						<div class="media-left">
+							<img src="https://www.w3schools.com/bootstrap/img_avatar1.png" class="media-object"
+								style="width: 120px">
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">홍길동</h4>
+							<p>등급: 매니저</p>
+							<p>전화: 010-1234-1234</p>
+							<p>이메일: hong@naver.com</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+
+
+</body>
+</html>
+```
+
+
+
+# Scrollspy
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+body {
+	position: relative;
+}
+
+#section1 {
+	padding-top: 50px;
+	height: 500px;
+	color: #fff;
+	background-color: #1E88E5;
+}
+
+#section2 {
+	padding-top: 50px;
+	height: 500px;
+	color: #fff;
+	background-color: #673ab7;
+}
+
+#section3 {
+	padding-top: 50px;
+	height: 500px;
+	color: #fff;
+	background-color: #ff9800;
+}
+
+#section41 {
+	padding-top: 50px;
+	height: 500px;
+	color: #fff;
+	background-color: #00bcd4;
+}
+
+#section42 {
+	padding-top: 50px;
+	height: 500px;
+	color: #fff;
+	background-color: #009688;
+}
+</style>
+
+<script>
+	$(document).ready(function() {
+
+	});
+</script>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">WebSiteName</a>
+			</div>
+			<div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li><a href="#section1">Section 1</a></li>
+						<li><a href="#section2">Section 2</a></li>
+						<li><a href="#section3">Section 3</a></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Section 4 <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#section41">Section 4-1</a></li>
+								<li><a href="#section42">Section 4-2</a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div id="section1" class="container-fluid">
+		<h1>Section 1</h1>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+	</div>
+	<div id="section2" class="container-fluid">
+		<h1>Section 2</h1>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+	</div>
+	<div id="section3" class="container-fluid">
+		<h1>Section 3</h1>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+	</div>
+	<div id="section41" class="container-fluid">
+		<h1>Section 4 Submenu 1</h1>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+	</div>
+	<div id="section42" class="container-fluid">
+		<h1>Section 4 Submenu 2</h1>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+		<p>Try to scroll this section and look at the navigation bar while
+			scrolling! Try to scroll this section and look at the navigation bar
+			while scrolling!</p>
+	</div>
+
+</body>
+</html>
+
+```
+
