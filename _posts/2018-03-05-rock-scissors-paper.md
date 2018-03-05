@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "rock, scissors, paper game using JSP"
-description: "rock, scissors, paper JSP"
-categories: [algorithm], [JSP]
-tags: [rock], [scissors], [paper], [JSP], [algorithm]
+description: "rock, scissors, paper game using JSP"
+categories: [algorithm, JSP]
+tags: [rock, scissors, paper, JSP, algorithm]
 redirect_from:
   - /2018/03/05/
 ---
