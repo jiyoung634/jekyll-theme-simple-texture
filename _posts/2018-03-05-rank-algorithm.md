@@ -2,8 +2,8 @@
 layout: post
 title: "rank algorithm using JSP"
 description: "rank algorithm using JSP"
-categories: [rank, algorithm, JSP]
-tags: []
+categories: [JSP], [algorithm]
+tags: [rank], [JSP], [algorithm]
 redirect_from:
   - /2018/03/05/
 ---
