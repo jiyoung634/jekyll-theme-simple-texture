@@ -2,8 +2,8 @@
 layout: post
 title: "Bubble Sort"
 description: "Bubble Sort"
-categories: [Java]
-tags: [bubble sort]
+categories: [algorithm, Java]
+tags: [algorithm, bubble sort]
 redirect_from:
   - /2017/12/04/
 ---

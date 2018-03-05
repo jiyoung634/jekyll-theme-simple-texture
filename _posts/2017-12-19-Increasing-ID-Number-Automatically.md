@@ -2,8 +2,8 @@
 layout: post
 title: "Increasing ID Number Automatically"
 description: "Increasing ID Number Automatically"
-categories: [Java]
-tags: [ID Number, Auto Increase]
+categories: [algorithm, Java]
+tags: [algorithm, ID Number, Auto Increase]
 redirect_from:
   - /2017/12/19/
 ---

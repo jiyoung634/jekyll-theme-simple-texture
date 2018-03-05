@@ -2,8 +2,8 @@
 layout: post
 title: "Getting Max Score Using Map & Iterator"
 description: "Getting Max Score Using Map & Iterator"
-categories: [Java]
-tags: [max score, max value, map, iterator]
+categories: [algorithm, Java]
+tags: [algorithm, max score, max value, map, iterator]
 redirect_from:
   - /2017/12/19/
 ---

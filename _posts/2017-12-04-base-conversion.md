@@ -2,8 +2,8 @@
 layout: post
 title: "Base Conversion"
 description: "Base Conversion"
-categories: [Java]
-tags: [base conversion]
+categories: [algorithm, Java]
+tags: [algorithm, base conversion]
 redirect_from:
   - /2017/12/04/
 ---
