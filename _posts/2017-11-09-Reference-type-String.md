@@ -10,7 +10,7 @@ redirect_from:
 
 
 
-# 참조 타입
+# 참조 타입 
 
 ```java
 package com.test;

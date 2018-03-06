@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "polymorphism"
-description: "It's about polymorphism"
+title: "Polymorphism"
+description: "Polymorphism"
 categories: [Java]
-tags: [random, polymorphism]
+tags: [polymorphism]
 redirect_from:
   - /2017/12/01/
 ---

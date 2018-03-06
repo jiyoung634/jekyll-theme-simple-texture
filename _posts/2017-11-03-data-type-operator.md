@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "data type & operator"
-description: "data type & operator of Java"
+title: "Data type & operator"
+description: "Data type & operator of Java"
 categories: [Java]
 tags: [data type, operator, java]
 redirect_from:
