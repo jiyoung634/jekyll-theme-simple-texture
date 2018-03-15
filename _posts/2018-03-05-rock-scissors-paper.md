@@ -12,7 +12,7 @@ redirect_from:
 
 # JSP를 이용한 가위, 바위, 보
 
-```jsp
+```html
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%
 	//JSP code
