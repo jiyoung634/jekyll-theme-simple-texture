@@ -57,9 +57,6 @@ redirect_from:
 			sb.append(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", names[i], scores[i], ranks[i]));
 		}
 		sb.append("</table>");
-		
-	
-		
 %>
 <!DOCTYPE html>
 <html>
