@@ -14,7 +14,7 @@ redirect_from:
 
 # JSP를 이용한 석차 알고리즘
 
-```html
+```javascript
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%
 	//JSP code
