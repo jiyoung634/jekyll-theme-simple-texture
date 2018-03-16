@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "(test)rank algorithm using JSP"
+title: "rank algorithm using JSP"
 description: "rank algorithm using JSP"
 categories: [algorithm, JSP]
 tags: [rank, JSP, algorithm]
