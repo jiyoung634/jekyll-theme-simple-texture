@@ -2511,7 +2511,7 @@ div#input:hover, div#output:hover {
 			$.post("${pageContext.request.contextPath}/qaboard/ajaxContent",
 					{qid:qid, pw:pw}, 
 					function(data, status){	
-						if(data.includes("Error:")){
+						if(data == "Error:Bad Request!!"){
 							th.parents("div.collapse").find("div.fade").show();
 						} else{var jobj = JSON.parse(data);
 							th.parents("div.collapse").text(jobj.content_);
