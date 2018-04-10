@@ -1627,7 +1627,7 @@ public class GuestbookHandler {
 		//방명록 출력(검색) 액션 ------------
 		int totalCount = dao.totalCount();
 		int totalContentCount = dao.guestBookList(key,value).size();
-		int totalPage = (int)Math.ceil(totalContentCount/limit_count);
+		int totalPage = (int)Math.ceil((double)totalContentCount/limit_count);
 		//페이징 처리 전
 		List<GuestBook> gbList = dao.guestBookList(key, value, limit_offset, limit_count);
 		List<GuestBook> picList = dao.picList();
