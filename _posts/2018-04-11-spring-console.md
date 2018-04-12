@@ -54,6 +54,7 @@ public class Main {
 		HelloWorld obj = (HelloWorld) context.getBean("helloWorld");	// Object 형으로 반환되므로 형 변환 필요
 		
 		obj.getMessage();
+      ((ClassPathXmlApplicationContext)context).close();
 	}
 
 }
@@ -81,7 +82,7 @@ public class Main {
 
 
 
-## Example2 - bean definition
+## Bean Definition
 
 ### Member.java
 
@@ -174,6 +175,7 @@ public class Main {
 		Member m3 = (Member) context.getBean("m3");	
 		System.out.println(m3.memberinfo());
 		
+      ((ClassPathXmlApplicationContext)context).close();
 	}
 
 }
@@ -211,7 +213,7 @@ public class Main {
 
 
 
-## Example3 - bean scope
+## Bean Scope
 
 ### Member.java
 
@@ -303,7 +305,7 @@ public class Main {
 		Member m2 = (Member) context.getBean("member");	
 		System.out.println(m2.memberinfo());
 		
-		
+		((ClassPathXmlApplicationContext)context).close();
 	}
 
 }
@@ -329,5 +331,523 @@ public class Main {
 
 
 
+## Init / Destroy
 
+### Main.java
+
+```java
+package com.test.ex006;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		AbstractApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex006/beans.xml");
+
+		HelloWorld obj = (HelloWorld) context.getBean("helloworld");
+		obj.getMessage();
+		context.registerShutdownHook();
+	}
+}
+
+```
+
+
+
+### beans.xml
+
+```java
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="helloworld" class="com.test.ex005.HelloWorld" init-method="init" destroy-method="destroy">
+		<property name="message" value="Hello World"></property>
+	</bean>
+	
+</beans>
+```
+
+
+
+### beans.xml
+
+```java
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+   default-init-method="init"
+   default-destroy-method="destroy">
+
+	<bean id="helloworld" class="com.test.ex006.HelloWorld">
+		<property name="message" value="Hello World"></property>
+	</bean>
+	
+</beans>
+```
+
+
+
+## Bean Post Processors
+
+### HelloIndia.java
+
+```java
+package com.test.ex008;
+
+public class HelloIndia {
+	private String message;
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void getMessage() {
+		System.out.println("Your Message : " + message);
+	}
+
+}
+
+```
+
+
+
+### HelloWorld.java
+
+```java
+package com.test.ex008;
+
+public class HelloWorld {
+	private String message;
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void getMessage() {
+		System.out.println("Your Message : " + message);
+	}
+
+}
+
+```
+
+
+
+### Main.java
+
+```java
+package com.test.ex008;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex008/beans.xml");
+		
+		HelloWorld hello1 = (HelloWorld) context.getBean("HelloWorld");
+		hello1.getMessage();
+
+
+		HelloIndia hello2 = (HelloIndia) context.getBean("HelloIndia");
+		hello2.getMessage();
+
+		((ClassPathXmlApplicationContext)context).close();
+		
+	}
+
+}
+
+```
+
+
+
+### beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="beanTeamplate" abstract="true">
+		<property name="message" value="Hello, World!" />
+	</bean>
+	<bean name="HelloWorld" class="com.test.ex008.HelloWorld" parent="beanTeamplate" />
+	<bean name="HelloIndia" class="com.test.ex008.HelloIndia" parent="beanTeamplate">
+		<property name="message" value="Hello, India!" />
+	</bean>
+	
+</beans>
+```
+
+
+
+# Constructor-based Dependency Injection
+
+### SpellChecker.java
+
+```java
+package com.test.ex009;
+
+public class SpellChecker {
+	public SpellChecker() {
+		System.out.println("Inside SpellChecker constructor.");
+	}
+
+	public void checkSpelling() {
+		System.out.println("Inside checkSpelling.");
+	}
+}
+
+```
+
+
+
+### TextEditor.java
+
+```java
+package com.test.ex009;
+
+public class TextEditor {
+	private SpellChecker spellChecker;
+
+	public TextEditor() {
+		
+	}
+	
+	public TextEditor(SpellChecker spellChecker) {
+		System.out.println("Inside TextEditor constructor.");
+		this.spellChecker = spellChecker;
+	}
+
+	public void spellCheck() {
+		spellChecker.checkSpelling();
+	}
+}
+
+```
+
+
+
+### Main.java
+
+```java
+package com.test.ex009;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex009/beans.xml");
+
+		TextEditor te = (TextEditor) context.getBean("textEditor");
+		te.spellCheck();
+		
+		((ClassPathXmlApplicationContext)context).close();
+	}
+}
+
+```
+
+
+
+### beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Definition for textEditor bean -->
+	<bean name="textEditor" class="com.test.ex009.TextEditor">
+		<!-- 
+			의존성 주입 설정 추가 
+			1. 생성자 의존 주입 : constructor-arg
+			2. setter 의존 주입 : property
+		-->
+		<constructor-arg ref="spellChecker" />
+	</bean>
+
+	<!-- Definition for spellChecker bean -->
+	<bean name="spellChecker" class="com.test.ex009.SpellChecker"></bean>
+
+</beans>
+```
+
+
+
+
+
+# Spring Setter-based Dependency Injection
+
+### SpellChecker.java
+
+```java
+package com.test.ex010;
+
+public class SpellChecker {
+	public SpellChecker() {
+		System.out.println("Inside SpellChecker constructor.");
+	}
+
+	public void checkSpelling() {
+		System.out.println("Inside checkSpelling.");
+	}
+}
+
+```
+
+
+
+### TextEditor.java
+
+```java
+package com.test.ex010;
+
+public class TextEditor {
+	private SpellChecker spellChecker;
+
+	public TextEditor() {
+		
+	}
+	
+	public void setSpellChecker(SpellChecker spellChecker) {
+      	System.out.println("Inside setSpecllChecker.");
+		this.spellChecker = spellChecker;
+	}
+
+	public void spellCheck() {
+		spellChecker.checkSpelling();
+	}
+}
+
+```
+
+
+
+### Main.java
+
+```java
+package com.test.ex010;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex010/beans.xml");
+
+		TextEditor te = (TextEditor) context.getBean("textEditor");
+		te.spellCheck();
+		
+		((ClassPathXmlApplicationContext)context).close();
+	}
+}
+
+```
+
+
+
+### beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Definition for textEditor bean -->
+	<bean name="textEditor" class="com.test.ex010.TextEditor">
+		<!-- 
+			의존성 주입 설정 추가 
+			1. 생성자 의존 주입 : constructor-arg
+			2. setter 의존 주입 : property
+		-->
+      	<!-- 참조형은 ref, 문자형 포함 기본 자료형은 value -->
+		<property name="spellChecker" ref="spellChecker" />
+	</bean>
+
+	<!-- Definition for spellChecker bean -->
+	<bean name="spellChecker" class="com.test.ex010.SpellChecker"></bean>
+
+</beans>
+```
+
+
+
+# Example2 - 인터페이스 활용
+
+## Super.java
+
+```java
+package com.test.ex011;
+
+// 부모 역할 클래스(인터페이스)
+public interface Super {
+	
+	// 추상 메소드(public abstract 키워드 생략)
+	void method();
+
+}
+
+```
+
+
+
+## SubClass01.java
+
+```java
+package com.test.ex011;
+
+public class SubClass01 implements Super {
+
+	public SubClass01() {
+		System.out.println("Inside SubClass01 constructor.");
+	}
+	
+	@Override
+	public void method() {
+		System.out.println("SubClass01의 오버라이딩 메소드");
+		
+	}
+	
+
+}
+
+```
+
+
+
+
+
+## SubClass02.java
+
+```java
+package com.test.ex011;
+
+public class SubClass02 implements Super {
+
+	public SubClass02() {
+		System.out.println("Inside SubClass02 constructor.");
+	}
+	
+	@Override
+	public void method() {
+		System.out.println("SubClass02의 오버라이딩 메소드");
+		
+	}
+
+}
+
+```
+
+
+
+
+
+## Sample.java
+
+```java
+package com.test.ex011;
+
+public class Sample {
+	// 의존 객체를 주입하기 위한 설정 추가
+	// -> 생성자 or setter
+	// -> 멤버의 자료형은 Interface로 지정
+	
+	private Super sup;
+	
+	public void setSup(Super sup) {
+		this.sup = sup;
+		System.out.println("Inside setSup");
+	}
+	
+	public void sup() {
+		sup.method();
+	}
+	
+}
+
+```
+
+
+
+
+
+## Main.java
+
+```java
+package com.test.ex011;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// Sample 클래스의 특정 메소드 호출 과정 추가
+		// -> Spring Framework
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex011/beans.xml");
+
+		Sample s = (Sample) context.getBean("Sample");
+		s.sup();
+		
+		((ClassPathXmlApplicationContext)context).close();
+	}
+
+}
+
+```
+
+
+
+
+
+## beans.xml
+
+```java
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Definition for Sample bean -->
+	<bean name="Sample" class="com.test.ex011.Sample">
+		<!-- 
+			의존성 주입 설정 추가 
+			1. 생성자 의존 주입 : constructor-arg
+			2. setter 의존 주입 : property
+		-->
+		<property name="sup" ref="Sub02" />
+	</bean>
+
+	<!-- Definition for SubClass01 bean -->
+	<bean name="Sub01" class="com.test.ex011.SubClass01"></bean>
+
+	<!-- Definition for SubClass02 bean -->
+	<bean name="Sub02" class="com.test.ex011.SubClass02"></bean>
+	
+</beans>
+```
 
