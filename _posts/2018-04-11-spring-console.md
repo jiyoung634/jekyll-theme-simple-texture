@@ -851,3 +851,233 @@ public class Main {
 </beans>
 ```
 
+
+
+# Inner Bean
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- outer bean -->
+	<bean id="textEditor" class="com.test.ex012.TextEditor">
+		<property name="spellChecker">
+			<!-- inner bean -->
+			<bean class="com.test.ex012.SpellChecker" />
+		</property>
+	</bean>
+
+</beans>
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- outer beans -->
+	<bean name="Sample" class="com.test.ex013.Sample">
+		<constructor-arg>
+			<!-- inner beans -->
+			<bean class="com.test.ex013.SubClass" />
+		</constructor-arg>
+	</bean>
+
+</beans>   
+```
+
+
+
+# Collection 객체를 이용한 DI
+
+## JavaCollection.java
+
+```java
+package com.test.ex014;
+
+import java.util.*;
+
+public class JavaCollection {
+   private List<String> addressList;
+   private Set<String>  addressSet;
+   private Map<String, String>  addressMap;
+   private Properties addressProp;
+
+   // a setter method to set List
+   public void setAddressList(List<String> addressList) {
+      this.addressList = addressList;
+   }
+   
+   // prints and returns all the elements of the list.
+   public List<String> getAddressList() {
+      System.out.println("List Elements :"  + addressList);
+      return addressList;
+   }
+   
+   // a setter method to set Set
+   public void setAddressSet(Set<String> addressSet) {
+      this.addressSet = addressSet;
+   }
+   
+   // prints and returns all the elements of the Set.
+   public Set<String> getAddressSet() {
+      System.out.println("Set Elements :"  + addressSet);
+      return addressSet;
+   }
+   
+   // a setter method to set Map
+   public void setAddressMap(Map<String, String> addressMap) {
+      this.addressMap = addressMap;
+   }
+   
+   // prints and returns all the elements of the Map.
+   public Map<String, String> getAddressMap() {
+      System.out.println("Map Elements :"  + addressMap);
+      return addressMap;
+   }
+   
+   // a setter method to set Property
+   public void setAddressProp(Properties addressProp) {
+      this.addressProp = addressProp;
+   }
+   
+   // prints and returns all the elements of the Property.
+   public Properties getAddressProp() {
+      System.out.println("Property Elements :"  + addressProp);
+      return addressProp;
+   }
+}
+```
+
+
+
+## Main.java
+
+```java
+package com.test.ex014;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+	
+   public static void main(String[] args) {
+	   
+      ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex014/beans.xml");
+      JavaCollection jc=(JavaCollection)context.getBean("javaCollection");
+
+      jc.getAddressList();
+      jc.getAddressSet();
+      jc.getAddressMap();
+      jc.getAddressProp();
+      
+      ((ClassPathXmlApplicationContext)context).close();
+   }
+}
+```
+
+
+
+## beans.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean name="javaCollection" class="com.test.ex014.JavaCollection">
+		<property name="addressList">
+			<!-- List 컬렉션 객체를 이용한 의존 주입 -->
+			<list>
+				<value>INDIA</value>
+				<value>Pakistan</value>
+				<value>USA</value>
+				<value>USA</value>
+			</list>
+		</property>
+		<property name="addressSet">
+			<!-- Set 컬렉션 객체를 이용한 의존 주입 -->
+			<list>
+				<value>INDIA</value>
+				<value>Pakistan</value>
+				<value>USA</value>
+				<value>USA</value>
+			</list>
+		</property>
+		<property name="addressMap">
+			<map>
+				<entry key="1" value="INDIA" />
+				<entry key="2" value="Pakistan" />
+				<entry key="3" value="USA" />
+				<entry key="4" value="USA" />
+			</map>
+		</property>
+		<property name="addressProp">
+			<props>
+				<prop key="one">INDIA</prop>
+				<prop key="two">Pakistan</prop>
+				<prop key="three">USA</prop>
+				<prop key="four">USA</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>   
+```
+
+
+
+# Autowire
+
+## byName
+
+```java
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean name="textEditor" class="com.test.ex015.TextEditor" autowire="byName">
+		<!-- <property name="spellChecker" ref="spellChecker" /> -->
+	</bean>
+
+	<bean name="spellChecker" class="com.test.ex015.SpellChecker"></bean>
+
+</beans>
+```
+
+
+
+## byType
+
+```java
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean name="textEditor" class="com.test.ex016.TextEditor" autowire="byType">
+		<!-- <property name="spellChecker" ref="spellChecker" /> -->
+	</bean>
+
+	<bean class="com.test.ex016.SpellChecker"></bean>
+
+</beans>
+```
+
+
+
+# Annotation
+
+
+
