@@ -10,6 +10,19 @@ redirect_from:
 
 
 
+**※ 주의) 다음의 라이브러리 필요**
+
+- commons-logging-1.2.jar
+- spring-aop-4.1.6.RELEASE.jar
+- spring-aspects-4.1.6.RELEASE.jar
+- spring-beans-4.1.6.RELEASE.jar
+- spring-context-4.1.6.RELEASE.jar
+- spring-context-support-4.1.6.RELEASE.jar
+- spring-core-4.1.6.RELEASE.jar
+- spring-expression-4.1.6.RELEASE.jar
+
+
+
 # Spring - Console Version
 
 ## Example1
@@ -1077,9 +1090,7 @@ public class Main {
 
 
 
-# Annotation
-
-## @required
+# Annotation - @Required
 
 ## Student.java
 
@@ -1161,6 +1172,183 @@ public class Main {
       <!-- try without passing age and check the result -->
       <!-- property name = "age"  value = "11"-->
    </bean>
+
+</beans>
+```
+
+
+
+# Annotation - @Autowired
+
+## SpellChecker.java
+
+```java
+package com.test.ex019;
+
+public class SpellChecker {
+	public SpellChecker() {
+		System.out.println("Inside SpellChecker constructor.");
+	}
+
+	public void checkSpelling() {
+		System.out.println("Inside checkSpelling.");
+	}
+}
+
+```
+
+
+
+## TextEditor.java
+
+```java
+package com.test.ex019;
+import org.springframework.beans.factory.annotation.*;
+
+public class TextEditor {
+	@Autowired
+	private SpellChecker spellChecker;
+
+	public void spellCheck() {
+		spellChecker.checkSpelling();
+	}
+}
+
+```
+
+
+
+## Main.java
+
+```java
+package com.test.ex019;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex019/beans.xml");
+
+		TextEditor te = (TextEditor) context.getBean("textEditor");
+		te.spellCheck();
+		
+		((ClassPathXmlApplicationContext)context).close();
+	}
+}
+
+```
+
+
+
+## beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <context:annotation-config />
+
+	<bean name="textEditor" class="com.test.ex019.TextEditor"></bean>
+
+	<bean class="com.test.ex019.SpellChecker"></bean>
+
+</beans>
+```
+
+
+
+# Annotation - @Inject
+
+## SpellChecker.java
+
+```java
+package com.test.ex021;
+
+public class SpellChecker {
+	public SpellChecker() {
+		System.out.println("Inside SpellChecker constructor.");
+	}
+
+	public void checkSpelling() {
+		System.out.println("Inside checkSpelling.");
+	}
+}
+
+```
+
+
+
+## TextEditor.java
+
+```java
+package com.test.ex021;
+// 주의) @Inject는 다른 라이브러리 필요(javax.inject-1.jar)
+import javax.inject.Inject;
+
+public class TextEditor {
+	@Inject
+	private SpellChecker spellChecker;
+
+	public void spellCheck() {
+		spellChecker.checkSpelling();
+	}
+}
+
+```
+
+
+
+## Main.java
+
+```java
+package com.test.ex021;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex021/beans.xml");
+
+		TextEditor te = (TextEditor) context.getBean("textEditor");
+		te.spellCheck();
+		
+		((ClassPathXmlApplicationContext)context).close();
+	}
+}
+
+```
+
+
+
+## beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <context:annotation-config />
+
+	<bean name="textEditor" class="com.test.ex021.TextEditor"></bean>
+
+	<bean class="com.test.ex021.SpellChecker"></bean>
 
 </beans>
 ```
