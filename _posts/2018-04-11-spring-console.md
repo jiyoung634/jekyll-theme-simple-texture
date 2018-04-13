@@ -1291,7 +1291,7 @@ public class SpellChecker {
 
 ```java
 package com.test.ex021;
-// 주의) @Inject는 다른 라이브러리 필요(javax.inject-1.jar)
+// 주의) @Inject는 다른 라이브러리 추가 필요(javax.inject-1.jar)
 import javax.inject.Inject;
 
 public class TextEditor {
