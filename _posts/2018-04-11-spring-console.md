@@ -1079,5 +1079,89 @@ public class Main {
 
 # Annotation
 
+## @required
 
+## Student.java
+
+```java
+package com.test.ex018;
+// import 필수
+import org.springframework.beans.factory.annotation.Required;
+
+public class Student {
+   private Integer age;
+   private String name;
+
+   @Required
+   public void setAge(Integer age) {
+      this.age = age;
+   }
+   public Integer getAge() {
+      return age;
+   }
+   
+   @Required
+   public void setName(String name) {
+      this.name = name;
+   }
+   public String getName() {
+      return name;
+   }
+}
+```
+
+
+
+## Main.java
+
+```java
+package com.test.ex018;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+	public static void main(String[] args) {
+	      ApplicationContext context = new ClassPathXmlApplicationContext("/com/test/ex018/beans.xml");
+	      
+	      Student student = (Student) context.getBean("student");
+	      System.out.println("Name : " + student.getName() );
+	      System.out.println("Age : " + student.getAge() );
+
+	      ((ClassPathXmlApplicationContext)context).close();
+	}
+
+}
+
+```
+
+
+
+## beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+   <!-- 환경설정 추가 -->
+   <context:annotation-config />
+
+   <!-- Definition for student bean -->
+   <bean id = "student" class = "com.test.ex018.Student">
+      <property name = "name" value = "Zara" />
+
+      <!-- try without passing age and check the result -->
+      <!-- property name = "age"  value = "11"-->
+   </bean>
+
+</beans>
+```
 
