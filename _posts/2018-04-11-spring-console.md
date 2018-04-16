@@ -1353,3 +1353,515 @@ public class Main {
 </beans>
 ```
 
+
+
+
+
+
+
+
+
+# Members(ver.Spring Console)
+
+## DeptMapper.java
+
+```java
+package com.test;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class DeptMapper implements RowMapper<Member> {
+
+	@Override
+	public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Member d = new Member();
+		d.setDeptId(rs.getString("deptId"));
+		d.setDeptName(rs.getString("deptName"));
+		return d;
+	}
+
+}
+
+```
+
+
+
+## Main.java
+
+```java
+package com.test;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		MemberService service = new MemberService();
+		Scanner sc = new Scanner(System.in);
+		boolean run = true;
+
+		while (run) {
+			System.out.println("---------------------------------------------------");
+			System.out.println("1.회원 정보 입력 2.회원 정보 출력 3.회원 정보 검색 ");
+			System.out.println("---------------------------------------------------");
+			System.out.print("선택(1~2, 0 quit)?");
+
+			int selectNo = sc.nextInt();
+			sc.nextLine();
+
+			switch (selectNo) {
+			case 1:
+				service.memberAdd(sc);
+				break;
+			case 2:
+				service.memberList();
+				break;
+			case 3:
+				service.memberList(sc);
+				break;
+			case 0:
+				run = false;
+				break;
+			}
+		}
+
+		System.out.println("프로그램 종료");
+		sc.close(); // Java 자원이 아닌 것은 명시적 close() 필요
+	}
+
+}
+
+```
+
+
+
+## Member.java
+
+```java
+package com.test;
+
+import java.time.*;
+
+public class Member {
+	// 자료형 클래스 선언시 멤버 구성은
+	// 동일 자료, 동일 식별자 권장
+	// -> 데이터베이스 입력, 출력 액션에서 사용한 모든 식별자(특히, 별칭 사용한 경우)를 멤버로 구성
+	// -> 컬럼 구성시 사용한 컬럼명 및 자료형을 멤버로 구성
+	// -> 오라클에서 NUMBER 자료형인 경우 Java에서는 int, double 자료형 사용
+	// -> 오라클에서 VARCHAR2, NVARCHAR2 자료형인 경우 Java에서는 String 자료형 사용
+	// -> 오라클에서 DATE 자료형인 경우 Java에서는 Date, LocalDate 자료형 사용
+
+	// 회원번호, 이름, 전화번호, 이메일, 등록일, 부서번호, 부서명
+	private String mid_;
+	private String name_;
+	private String phone;
+	private String email;
+	private LocalDate regDate;
+	private String deptId;
+	private String deptName;
+
+	// getter
+	public String getMid_() {
+		return mid_;
+	}
+
+	public String getName_() {
+		return name_;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	
+	
+	public String getDeptName() {
+		return deptName;
+	}
+
+	// setter
+	public void setMid_(String mid_) {
+		this.mid_ = mid_;
+	}
+
+	public void setName_(String name_) {
+		this.name_ = name_;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	// toString() 메소드 오버라이딩
+	@Override
+	public String toString() {
+		return String.format(" %s | %5s | %13s | %15s | %12s | %5s ", this.mid_, this.name_, this.phone, this.email, this.regDate, this.deptName);
+	}
+}
+
+```
+
+
+
+## MemberDAO.java
+
+```java
+package com.test;
+
+import java.util.*;
+
+public interface MemberDAO {
+	public List<Member> memberList();
+	
+	public List<Member> memberList(String key, String value);
+	
+	public List<Member> deptList();
+	
+	public int memberAdd(Member m);
+}
+
+```
+
+
+
+## MemberJDBCTemplate.java
+
+```java
+package com.test;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class MemberJDBCTemplate implements MemberDAO {
+	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplateObject;
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	}
+
+	//전체 출력
+	@Override
+	public List<Member> memberList() {
+
+		/*
+		 * CREATE OR REPLACE VIEW membersView 
+		 * AS 
+		 * SELECT mid, name_, phone, email,
+		 * regDate, deptName FROM members m, dept d WHERE m.deptId = d.deptId;
+		 */
+
+		String sql = "SELECT mid_, name_, phone, email, regDate, deptName FROM membersView ORDER BY mid_";
+		List<Member> result = jdbcTemplateObject.query(sql, new MemberMapper());
+		
+		return result;
+	}
+	
+	//검색 출력
+	@Override
+	public List<Member> memberList(String key, String value) {
+		/*
+		 * CREATE OR REPLACE VIEW membersView 
+		 * AS 
+		 * SELECT mid, name_, phone, email,
+		 * regDate, deptName FROM members m, dept d WHERE m.deptId = d.deptId;
+		 */
+
+		String sql = "SELECT mid_, name_, phone, email, regDate, deptName FROM membersView ";
+		switch (key) {
+		case "All":
+			break;
+		case "Mid":
+			sql += "WHERE mid_=? ";
+			break;
+		case "Name":
+			sql += "WHERE INSTR(name_, ?)>0 ";
+			break;
+		case "Phone":
+			sql += "WHERE INSTR(phone, ?)>0 ";
+			break;
+		case "Email":
+			sql += "WHERE INSTR(email, ?)>0 ";
+			break;
+		case "RegDate":
+			sql += "WHERE INSTR(regDate, ?)>0 ";
+			break;
+		case "DeptName":
+			sql += "WHERE INSTR(deptName, ?)>0 ";
+			break;
+		}
+		
+		sql+="ORDER BY mid_";
+		
+		List<Member> result = jdbcTemplateObject.query(sql, new MemberMapper(), value);
+		
+		return result;
+	}
+
+	//부서 출력
+	@Override
+	public List<Member> deptList() {
+		String sql = "SELECT deptId, deptName FROM dept ORDER BY deptId";
+		List<Member> result = jdbcTemplateObject.query(sql, new DeptMapper());
+		
+		return result;
+	}
+
+	//입력
+	@Override
+	public int memberAdd(Member m) {
+		String sql = "INSERT INTO members (mid_, name_, phone, email, regDate, deptId) VALUES(CONCAT('M', LPAD(SUBSTR(IFNULL((SELECT MAX(mid_) FROM members m),'M00'),2,2)+1, 2, 0)), ?, ?, ?, ?, ?)";
+		int result = jdbcTemplateObject.update(sql,m.getName_(), m.getPhone(), m.getEmail(), m.getRegDate(), m.getDeptId());
+		
+		return result;
+	}
+
+
+}
+
+```
+
+
+
+## MemberMapper.java
+
+```java
+package com.test;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class MemberMapper implements RowMapper<Member> {
+	// 경우의 수 별로 만들어야 한다
+	
+	@Override
+	public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+		
+		Member m = new Member();
+		m.setMid_(rs.getString("mid_"));
+		m.setName_(rs.getString("name_"));
+		m.setPhone(rs.getString("phone"));
+		m.setEmail(rs.getString("email"));
+		m.setRegDate(rs.getDate("regDate").toLocalDate());
+		m.setDeptName(rs.getString("deptName"));
+		
+		return m;
+	}
+
+}
+
+```
+
+
+
+## MemberService.java
+
+```java
+package com.test;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+// 콘솔 액션 전용 클래스
+public class MemberService {
+	private ApplicationContext context;
+	private MemberJDBCTemplate memberJDBCTemplate;
+	
+	public MemberService() {
+		this.context = new ClassPathXmlApplicationContext("/com/test/beans.xml");
+		this.memberJDBCTemplate = (MemberJDBCTemplate) context.getBean("memberJDBCTemplate");
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		((ClassPathXmlApplicationContext) context).close();
+	}
+
+	// 회원 정보 출력 메소드
+	public void memberList() {
+		List<Member> list = memberJDBCTemplate.memberList();
+		System.out.printf("총: %d명%n", list.size());
+		System.out.println("--------------------------------------------------------------------------");
+		System.out.println(" MID | 이름  |    전화번호   |     이메일      |    등록일    |    부서  ");
+		System.out.println("--------------------------------------------------------------------------");
+		for (Member l : list) {
+			System.out.println(l.toString());
+		}
+
+	}
+
+	// 부서 정보 출력 메소드
+	private void deptList() {
+		List<Member> deptlist = memberJDBCTemplate.deptList();
+		for (Member d : deptlist) {
+			System.out.printf("%s-%s%n", d.getDeptId(), d.getDeptName());
+		}
+	}
+
+	// 회원 정보 입력 메소드
+	public void memberAdd(Scanner sc) {
+		System.out.println("-------------------");
+		System.out.println("   회원 정보 입력  ");
+		System.out.println("-------------------");
+
+		System.out.println("이름?");
+		String name_ = sc.nextLine();
+
+		System.out.println("전화번호?");
+		String phone = sc.nextLine();
+
+		System.out.println("이메일?");
+		String email = sc.nextLine();
+
+		System.out.println("등록일?");
+		String date = sc.nextLine();
+		LocalDate regDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+
+		this.deptList();
+		System.out.println("부서번호?");
+		String deptId = sc.nextLine();
+
+		Member m = new Member();
+		m.setName_(name_);
+		m.setPhone(phone);
+		m.setEmail(email);
+		m.setRegDate(regDate);
+		m.setDeptId(deptId);
+
+		int result = memberJDBCTemplate.memberAdd(m);
+
+		if (result == 1)
+			System.out.println("회원 정보 입력이 완료되었습니다.");
+	}
+	
+
+	// 회원 정보 검색 메소드(서브메뉴 운영)
+	public void memberList(Scanner sc) {
+		// 검색 기준(서브메뉴)과 검색값을 콘솔에서 입력 받고, 검색 진행 후 그 결과를 콘솔에 출력.
+		boolean run = true;
+		while (run) {
+			System.out.println("--------------------------------------------------------------------------------------------");
+			System.out.println("   1.회원번호 기준 2.이름 기준 3.이메일 기준 4.등록일 기준 5.부서 기준 6.전화번호 기준  ");
+			System.out.println("--------------------------------------------------------------------------------------------");
+			System.out.print("검색기준(1~5, 0 quit)?> ");
+			int selectNo = sc.nextInt();
+			sc.nextLine();
+			
+			switch (selectNo) {
+			case 1:	this.memberList(sc, "Mid");	break;
+			case 2:	this.memberList(sc, "Name");	break;
+			case 3:	this.memberList(sc, "Email");	break;
+			case 4:	this.memberList(sc, "RegDate");	break;
+			case 5:	this.memberList(sc, "DeptName");	break;
+			case 6:	this.memberList(sc, "Phone");	break;
+			case 0: run = false;	break;
+			}
+
+		}
+	}
+	// 회원 정보 검색 메소드
+	
+	private void memberList(Scanner sc, String key) {
+		System.out.print("검색어를 입력하세요>");
+		String value = sc.nextLine();
+		List<Member> list = memberJDBCTemplate.memberList(key, value);
+
+		System.out.println("-------------------");
+		System.out.println("  회원 정보 검색   ");
+		System.out.println("-------------------");
+		System.out.printf("총: %d명%n", list.size());
+
+		if (list.size() > 0) {
+			// 검색 결과가 존재하는 경우
+			System.out.println("--------------------------------------------------------------------------");
+			System.out.println(" MID | 이름  |    전화번호   |     이메일      |    등록일    |    부서  ");
+			System.out.println("--------------------------------------------------------------------------");
+			for (Member m : list) {
+				System.out.printf(" %s | %5s | %13s | %15s | %12s | %5s %n"
+						, m.getMid_(), m.getName_(), m.getPhone(), m.getEmail(), m.getRegDate(), m.getDeptName());
+			}
+		} else {
+			// 검색 결과가 존재하지 않는 경우
+			System.out.println("검색 결과가 없습니다.");
+		}
+		
+	}
+
+}
+
+```
+
+
+
+## beans.xml
+
+```xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:annotation-config />
+	<!-- 데이터베이스 연결 정보 관리 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://211.63.89.72:3306/test03?useSSL=false" />
+		<property name="username" value="test03" />
+		<property name="password" value="1234" />
+	</bean>
+
+	<bean id="memberJDBCTemplate" class="com.test.MemberJDBCTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>
+```
+
