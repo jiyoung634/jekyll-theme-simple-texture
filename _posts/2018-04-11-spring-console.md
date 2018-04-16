@@ -20,6 +20,11 @@ redirect_from:
 - spring-context-support-4.1.6.RELEASE.jar
 - spring-core-4.1.6.RELEASE.jar
 - spring-expression-4.1.6.RELEASE.jar
+- spring-jdbc-4.1.6.RELEASE.jar
+- spring-tx-4.1.6.RELEASE.jar
+- mysql-connector-java-5.1.45-bin.jar
+
+
 
 
 
