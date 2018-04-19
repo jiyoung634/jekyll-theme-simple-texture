@@ -3,7 +3,7 @@ layout: post
 title: "Reference type & String"
 description: "Reference type & String"
 categories: [Java]
-tags: [Reference type, String, Java]
+tags: [Java, String, reference type]
 redirect_from:
   - /2017/11/09/
 ---

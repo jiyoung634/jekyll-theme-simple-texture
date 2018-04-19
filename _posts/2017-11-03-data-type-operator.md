@@ -3,7 +3,7 @@ layout: post
 title: "Data type & operator"
 description: "Data type & operator of Java"
 categories: [Java]
-tags: [data type, operator, java]
+tags: [Java, data type, operator]
 redirect_from:
   - /2017/11/03/
 ---
@@ -65,8 +65,6 @@ public class Sample003 {
 		//범위 초과
 		//컴파일 에러 - Type mismatch: cannot convert from int to byte
 		byte b = 200;
-		
-		
 
 	}
 
@@ -107,13 +105,11 @@ public class Sample005 {
 	public static void main(String[] args) {
 		
 		long a = 100;
-		
 		long b = 100L;
 		
 		//범위 초과
 		//The literal 9999999999 of type int is out of range 
 		long c = 9999999999;
-		
 		long d = 9999999999L;
 
 	}
@@ -305,7 +301,6 @@ public class Sample010 {
 		int f = e;
 		System.out.println(f);
 		
-
 	}
 
 }
@@ -393,10 +388,6 @@ public class Sample012 {
 		
 		int b = Integer.MAX_VALUE + 1;
 		System.out.println(b); // 2147483647 + 1 => 2147483648(예상) => -2147483648
-		
-		
-
-
 
 	}
 
@@ -421,9 +412,7 @@ public class Sample013 {
 		int b = 10, c = 20;
 		
 		int d, e, f;
-		d = e = f = 10;
-		
-		
+		d = e = f = 10;	
 		
 		int g = 10;
 		System.out.println(g);
@@ -492,7 +481,6 @@ public class Sample015 {
 		System.out.println("(b--)   = " + (b--));
 		System.out.println("--b   = " + --b);
 		System.out.println("b--   = " + b--);
-
 		
 	}
 
@@ -516,7 +504,6 @@ public class Sample016 {
 		// -> 안전한 산술연산을 하려면 오버플로우 감지하는 과정 필요
 		int c = a + b ;
 		System.out.println(c);
-
 		
 	}
 
@@ -546,7 +533,6 @@ public class Sample017 {
 		double d = ((a * 10) - c) / 10.0;
 		System.out.println(d);
 		
-
 	}
 }
 ```
