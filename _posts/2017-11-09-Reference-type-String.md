@@ -18,7 +18,7 @@ package com.test;
 public class Sample080 {
 
 	public static void main(String[] args) {
-		
+		 
 		//참조 타입
 		/*
 		

@@ -1626,7 +1626,7 @@ $(document).ready(function(){
 <div class="container">
 	<h3>${message}</h3>
 </div>
-
+ 
 </body>
 </html>
 ```

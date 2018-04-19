@@ -906,7 +906,7 @@ public class Sample028 {
 		int min = (temp2 < i) ? temp2 : i;
 		System.out.println(min);
 
-	}
+	} 
 
 }
 
