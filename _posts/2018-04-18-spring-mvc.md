@@ -1952,9 +1952,7 @@ div#input:hover, div#output:hover {
 
 # Spring MVC Example - Members
 
-![members](C:\jiyoung634.github.io\assets\images\screenshots\members.png)
-
-
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/screenshots/members.png?raw=true">
 
 ### Member.java
 
