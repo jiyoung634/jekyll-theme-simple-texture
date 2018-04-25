@@ -3,7 +3,7 @@ layout: post
 title: "Spring(ver.MVC)"
 description: "Spring(ver.MVC)"
 categories: [Spring, MVC]
-tags: [Spring, MVC, handler, controller, resolver]
+tags: [Spring, MVC, handler, controller, resolver, file upload]
 redirect_from:
   - /2018/04/18/
 ---
@@ -1631,4 +1631,269 @@ $(document).ready(function(){
 </html>
 ```
 
+
+
+# File Upload
+
+### FileModel.java
+
+```java
+package com.test;
+
+import org.springframework.web.multipart.MultipartFile;
+
+public class FileModel {
+	private MultipartFile file;	// 이 이름에 해당하는 데이터를 자동으로 채워줌
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+      this.file = file;
+   }
+}
+```
+
+
+
+### FileUploadController.java
+
+```java
+package com.test;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+
+@Controller
+public class FileUploadController {
+
+	@Autowired
+	private ServletContext context;
+
+	@RequestMapping(value = "/fileUploadPage", method = RequestMethod.GET)
+	public String fileUploadPage() {
+		return "fileUpload";
+	}
+
+	@RequestMapping(value = "/fileUploadPage", method = RequestMethod.POST)
+	public String fileUpload(FileModel file, ModelMap model) throws IOException {
+		MultipartFile multipartFile = file.getFile();
+		System.out.println("Fetching file");
+		String uploadPath = context.getRealPath("") + "temp" + File.separator;
+		System.out.println(uploadPath);
+		FileCopyUtils.copy(multipartFile.getBytes(),
+				new File(uploadPath + java.util.UUID.randomUUID() + "-" + multipartFile.getOriginalFilename()));
+		String fileName = multipartFile.getOriginalFilename();
+		model.addAttribute("fileName", fileName);
+		return "success";
+	}
+}
+```
+
+
+
+### fileUpload.jsp
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%-- jstl-1.2.jar 파일 필요 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+
+div#input:hover, div#output:hover {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+</style>
+
+<!-- Google Map API -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+
+	   // jQuery methods go here...
+
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+     <form method = "POST" enctype = "multipart/form-data">
+         Please select a file to upload : 
+         <input type = "file" name = "file" />
+         <input type = "submit" value = "upload" />
+      </form>
+</div>
+
+</body>
+</html>
+```
+
+
+
+### success.jsp
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%-- jstl-1.2.jar 파일 필요 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Jiyoung's Test</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+
+div#input:hover, div#output:hover {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+</style>
+
+<!-- Google Map API -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$(document).ready(function(){
+
+	   // jQuery methods go here...
+
+});
+</script>
+</head>
+<body>
+
+<div class="container">
+	<h1>Spring MVC File Upload Test</h1>
+	<p>FileName :  <b> ${fileName} </b> - Uploaded Successfully. </p>
+</div>
+
+</body>
+</html>
+```
+
+
+
+### dispatcher-servlet.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+   http://www.springframework.org/schema/mvc 
+   http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<context:component-scan base-package="com.test" />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 파일 업로드 설정 추가 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" ></bean>
+
+</beans> 
+```
+
+
+
+### web.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>membersMVC_20180424</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+   <servlet>
+      <servlet-name>dispatcher</servlet-name>
+      <servlet-class>
+         org.springframework.web.servlet.DispatcherServlet
+      </servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>dispatcher</servlet-name>
+      <url-pattern>/</url-pattern>
+   </servlet-mapping>  
+  
+  <!-- 인코딩 필터 설정 추가 -->
+	<filter>
+	    <filter-name>encoding</filter-name>
+	    <filter-class>
+	        org.springframework.web.filter.CharacterEncodingFilter
+	    </filter-class>
+	    <init-param>
+	        <param-name>encoding</param-name>
+	        <param-value>UTF-8</param-value>
+	    </init-param>
+	  </filter> 
+	  <filter-mapping>
+	      <filter-name>encoding</filter-name>
+	      <url-pattern>/*</url-pattern>
+	  </filter-mapping> 
+
+</web-app>
+```
 
