@@ -24,7 +24,7 @@ redirect_from:
 
 
 
-### 결과 예시 (로그인)
+### 결과 예시
 
 <img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex1.png?raw=true">
 
@@ -35,6 +35,16 @@ redirect_from:
 <img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex4.png?raw=true">
 
 <img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex5.png?raw=true">
+
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex6.png?raw=true">
+
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex7.png?raw=true">
+
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex8.png?raw=true">
+
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex9.png?raw=true">
+
+<img src="https://github.com/jiyoung634/jiyoung634.github.io/blob/master/assets/images/employees/employees_ex10.png?raw=true">
 
 
 
