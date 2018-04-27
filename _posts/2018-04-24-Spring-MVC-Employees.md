@@ -291,7 +291,11 @@ public interface EmployeesDAO {
 	
 	// 직원 정보 삭제 메소드
 	public int delete(String value) throws DataAccessException;
-		
+	
+	// 직원 정보 수정 메소드
+	public int update(Employees e) throws DataAccessException;
+	
+	
 	// 사진 입력 메소드
 	public int pictureInsert(Employees e) throws DataAccessException;
 	
@@ -311,6 +315,9 @@ public interface EmployeesDAO {
 
 	// 지역 정보 삭제 메소드
 	public int regionDelete(String value) throws DataAccessException;
+	
+	// 지역 정보 수정 메소드
+	public int regionUpdate(Employees e) throws DataAccessException;
 	// -------------------------------------------------------------------------------------------------------------------------
 
 	// 부서 정보 입력 메소드
@@ -321,6 +328,9 @@ public interface EmployeesDAO {
 
 	// 부서 정보 삭제 메소드
 	public int departmentDelete(String value) throws DataAccessException;
+	
+	// 부서 정보 수정 메소드
+	public int departmentUpdate(Employees e) throws DataAccessException;
 	// -------------------------------------------------------------------------------------------------------------------------
 
 	// 직위 정보 입력 메소드
@@ -334,6 +344,9 @@ public interface EmployeesDAO {
 
 	// 직위 정보 삭제 메소드
 	public int jobDelete(String value) throws DataAccessException;
+	
+	// 직위 정보 수정 메소드
+	public int jobUpdate(Employees e) throws DataAccessException;
 }
 
 ```
@@ -378,7 +391,7 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 			ORDER BY eid;
 		 */
 
-		String sql = "SELECT eid, name_, ssn, hiredate, phone, reg_name, dept_name, job_title, basicpay, extrapay, pay, picName FROM empView";
+		String sql = "SELECT eid, name_, ssn, hiredate, phone, reg_id, reg_name, dept_id, dept_name, job_id, job_title, basicpay, extrapay, pay, picName FROM empView";
 
 		// 정렬 기준에 따른 ORDER BY 구문 추가
 		switch (key) {
@@ -419,7 +432,7 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 			ORDER BY eid;
 		 */
 
-		String sql = "SELECT eid, name_, ssn, hiredate, phone, reg_name, dept_name, job_title, basicpay, extrapay, pay, picName FROM empView";
+		String sql = "SELECT eid, name_, ssn, hiredate, phone, reg_id, reg_name, dept_id, dept_name, job_id, job_title, basicpay, extrapay, pay, picName FROM empView";
 
 		// 검색 기준에 따른 구문 추가
 		switch (key) {
@@ -463,6 +476,15 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 		
 		String sql = "DELETE FROM employees WHERE eid = ?";
 		int result = this.jdbcTemplate.update(sql, value);
+		
+		return result;
+	}
+	
+	@Override
+	public int update(Employees e) throws DataAccessException {
+		
+		String sql = "UPDATE employees SET name_=?, ssn=?, hiredate=?, phone=?, reg_id=?, dept_id=?, job_id=?, basicpay=?, extrapay=? WHERE eid=?";
+		int result = this.jdbcTemplate.update(sql, e.getName_(), e.getSsn(), e.getHiredate(), e.getPhone(), e.getReg_id(), e.getDept_id(), e.getJob_id(), e.getBasicpay(), e.getExtrapay(), e.getEid());
 		
 		return result;
 	}
@@ -531,6 +553,14 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 	}
 
 	@Override
+	public int regionUpdate(Employees e) throws DataAccessException {
+		String sql = "UPDATE regions SET reg_name=? WHERE reg_id = ?";
+		int result = this.jdbcTemplate.update(sql, e.getReg_name(), e.getReg_id());
+		
+		return result;
+	}
+	
+	@Override
 	public int departmentInsert(String value) throws DataAccessException{
 		
 		String sql = "INSERT INTO departments(dept_id, dept_name) VALUES(CONCAT('DEPT',LPAD((SUBSTRING(IFNULL((SELECT MAX(dept_id) FROM departments d),'DEPT00'),5)+1),2,0)),?)";
@@ -563,6 +593,14 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 		
 		String sql = "DELETE FROM departments WHERE dept_id = ?";
 		int result = this.jdbcTemplate.update(sql, value);
+		
+		return result;
+	}
+	
+	@Override
+	public int departmentUpdate(Employees e) throws DataAccessException {
+		String sql = "UPDATE departments SET dept_name=? WHERE dept_id = ?";
+		int result = this.jdbcTemplate.update(sql, e.getDept_name(), e.getDept_id());
 		
 		return result;
 	}
@@ -611,6 +649,14 @@ public class EmployeesJDBCTemplate implements EmployeesDAO {
 		
 		return result;
 	}
+	
+	@Override
+	public int jobUpdate(Employees e) throws DataAccessException {
+		String sql = "UPDATE jobs SET job_title=?, minBasicPay=? WHERE job_id = ?";
+		int result = this.jdbcTemplate.update(sql, e.getJob_title(), e.getMinBasicPay(), e.getJob_id());
+		
+		return result;
+	}
 
 
 }
@@ -643,8 +689,11 @@ public class EmployeesMapper implements RowMapper<Employees>{
 		e.setSsn(rs.getInt("ssn"));
 		e.setHiredate(rs.getString("hiredate"));
 		e.setPhone(rs.getString("phone"));
+		e.setReg_id(rs.getString("reg_id"));
 		e.setReg_name(rs.getString("reg_name"));
+		e.setDept_id(rs.getString("dept_id"));
 		e.setDept_name(rs.getString("dept_name"));
+		e.setJob_id(rs.getString("job_id"));
 		e.setJob_title(rs.getString("job_title"));
 		e.setBasicpay(rs.getInt("basicpay"));
 		e.setExtrapay(rs.getInt("extrapay"));
@@ -817,8 +866,37 @@ public class EmployeesController {
 		
 		return "redirect:/employee/list";
 	}
+	
+	@RequestMapping("/updateform")
+	public String updateform(String eid, Model model) {
+		// 기존 자료를 데이터베이스에서 읽어와서 updateform 페이지에 출력
+		Employees e = jdbcTemplate.list("eid", eid).get(0);
+		List<Employees> deptList = jdbcTemplate.departmentList();
+		List<Employees> jobList = jdbcTemplate.jobList();
+		List<Employees> regionList = jdbcTemplate.regionList();
+		
+		model.addAttribute("deptList",deptList);
+		model.addAttribute("jobList",jobList);
+		model.addAttribute("regionList",regionList);
+		model.addAttribute("employeeInfo", e);
+		
+		return "employees/employeeupdateform";	// /WEB-INF/views/employees/employeeupdateform.jsp
+	}
 
-
+	@RequestMapping("/update")
+	public String update(Employees e, RedirectAttributes rttr) {
+		// GET 방식 대신 RedirectAttributes를 이용하여 성공/실패 메세지 출력
+		int result = 0;
+		try{
+			result = jdbcTemplate.update(e);
+		} catch(DataAccessException de) {
+			System.out.println(de.getMessage());
+		}
+		
+		rttr.addFlashAttribute("success", result);
+		
+		return "redirect:/employee/list";
+	}
 }
 
 ```
@@ -932,6 +1010,19 @@ public class DepartmentController {
 		return "redirect:/department/list";
 	}
 
+	@RequestMapping("/update")
+	public String update(Employees e, RedirectAttributes rttr) {
+		
+		int result=0;
+		try {
+			result=jdbcTemplate.departmentUpdate(e);
+		} catch(DataAccessException de){
+			System.out.println(de.getMessage());
+		}
+		rttr.addFlashAttribute("success", result);
+		
+		return "redirect:/department/list";
+	}
 }
 
 ```
@@ -1000,6 +1091,20 @@ public class PositionController {
 		
 		return "redirect:/position/list";
 	}
+	
+	@RequestMapping("/update")
+	public String update(Employees e, RedirectAttributes rttr) {
+		
+		int result=0;
+		try {
+			result=jdbcTemplate.jobUpdate(e);
+		} catch(DataAccessException de){
+			System.out.println(de.getMessage());
+		}
+		rttr.addFlashAttribute("success", result);
+		
+		return "redirect:/position/list";
+	}
 }
 
 ```
@@ -1061,6 +1166,20 @@ public class RegionContoller {
 		int result=0;
 		try {
 			result=jdbcTemplate.regionDelete(reg_id);
+		} catch(DataAccessException de){
+			System.out.println(de.getMessage());
+		}
+		rttr.addFlashAttribute("success", result);
+		
+		return "redirect:/region/list";
+	}
+	
+	@RequestMapping("/update")
+	public String update(Employees e, RedirectAttributes rttr) {
+		
+		int result=0;
+		try {
+			result=jdbcTemplate.regionUpdate(e);
 		} catch(DataAccessException de){
 			System.out.println(de.getMessage());
 		}
@@ -1517,50 +1636,55 @@ div#input:hover, div#output:hover {
 
 <script>
 $(document).ready(function() {
-	var key = "${searchKey}";
-	var value = "${searchValue}";
- 		
-	$("select#searchKey option[value='"+key+"']").attr("selected", "selected"); 
-	$("input#searchValue").val(value);
-	
-	// 사진 입력
-	$("button.btnPictureInsert").on("click", function(){
-		var eid = $(this).val();
-		// eid 세팅
-		$("div#pictureModal input[name='eid']").val(eid);
+		var key = "${searchKey}";
+		var value = "${searchValue}";
+	 		
+		$("select#searchKey option[value='"+key+"']").attr("selected", "selected"); 
+		$("input#searchValue").val(value);
 		
-		// 사진 신규등록or수정 체크
-		if($(this).parents("tr").find("button.btnShowPicture").is(':disabled')){
-			$("div#pictureModal input[name='check']").val("1");
-		} else {
-			$("div#pictureModal input[name='check']").val("0");
-		}
+		// 사진 입력
+		$("button.btnPictureInsert").on("click", function(){
+			var eid = $(this).val();
+			// eid 세팅
+			$("div#pictureModal input[name='eid']").val(eid);
+			
+			// 사진 신규등록or수정 체크
+			if($(this).parents("tr").find("button.btnShowPicture").is(':disabled')){
+				$("div#pictureModal input[name='check']").val("1");
+			} else {
+				$("div#pictureModal input[name='check']").val("0");
+			}
+			
+			$("#pictureModal").modal();
+			
+		});
 		
-		$("#pictureModal").modal();
+		// 사진 보기
+		$("button.btnShowPicture").on("click", function(){
+			// 이름 얻어오기
+			var str = $(this).parents("td").text();
+			var name_ = str.substring(0,str.indexOf("/"));
+			// 사진 주소 얻어오기
+			$("#myModal img").attr("src", "${pageContext.request.contextPath}/resources/picture/"+($(this).val()));
+			$("#myModal h4.modal-title").text(name_ +"의 사진");
+			$("#myModal").modal();
+		});
 		
-	});
-	
-	// 사진 보기
-	$("button.btnShowPicture").on("click", function(){
-		// 이름 얻어오기
-		var str = $(this).parents("td").text();
-		var name_ = str.substring(0,str.indexOf("/"));
-		// 사진 주소 얻어오기
-		$("#myModal img").attr("src", "${pageContext.request.contextPath}/resources/picture/"+($(this).val()));
-		$("#myModal h4.modal-title").text(name_ +"의 사진");
-		$("#myModal").modal();
-	});
-	
-	// 삭제
-	$("button.btnDelete").on("click", function(){
-		// 경고창 메시지
-		if(confirm("현재 자료를 삭제할까요?")){
-				
-		// 삭제 요청 -> 지역번호 전송
-		location.assign("${pageContext.request.contextPath}/employee/delete?eid="+$(this).val());
-		}
-	});
-	
+		// 삭제
+		$("button.btnDelete").on("click", function(){
+			// 경고창 메시지
+			if(confirm("현재 자료를 삭제할까요?")){
+					
+			// 삭제 요청 -> 지역번호 전송
+			location.assign("${pageContext.request.contextPath}/employee/delete?eid="+$(this).val());
+			}
+		});
+		
+		// 수정
+		$("button.btnUpdateForm").on("click", function(){
+			// 수정 요청 -> 직원 번호 전송
+				location.assign("${pageContext.request.contextPath}/employee/updateform?eid="+$(this).val());
+		});	
 });
 </script>
 </head>
@@ -1653,7 +1777,7 @@ $(document).ready(function() {
 								<td><fmt:formatNumber value="${e.extrapay}" groupingUsed="true" /></td>
 								<td><fmt:formatNumber value="${e.pay}" groupingUsed="true" /></td>
 								<td><button type="button" class="btn btn-default btn-xs btnPictureInsert" value="${e.eid}">사진등록</button></td>
-								<td><button type="button" class="btn btn-default btn-xs btnDelete" value="${e.eid}">삭제</button><br><button type="button" class="btn btn-default btn-xs  btnUpdateForm" >수정</button></td>
+								<td><button type="button" class="btn btn-default btn-xs btnDelete" value="${e.eid}">삭제</button><br><button type="button" class="btn btn-default btn-xs btnUpdateForm" value="${e.eid}" >수정</button></td>
 							</tr>
 							</c:forEach>
 							
@@ -1778,7 +1902,7 @@ div#input:hover, div#output:hover {
 				if (status == "success"){
 					// JSON 객체 분석 및 파싱 결과 출력
 	               var jobj = JSON.parse(response);
-					$(this).attr("placeholder", "기본급(최소 "+jobj.minBasicPay+"원 이상)" );
+				   $(this).attr("placeholder", "기본급(최소 "+jobj.minBasicPay+"원 이상)" );
 	            }
 			});
 		});
@@ -1932,6 +2056,22 @@ $(document).ready(function(){
 		location.assign("${pageContext.request.contextPath}/department/delete?dept_id="+$(this).val());
 		}
 	});
+	
+	// 수정
+	$("button.btnUpdate").on("click", function(){
+		var obj = JSON.parse($(this).val());
+		var dept_name = obj.dept_name;
+		var dept_id = obj.dept_id;
+		
+		// 입력폼 제목 수정
+		$("div#input div.panel-heading").text("부서 수정");
+		// 입력폼 액션 주소 변경
+		$("div#input form").attr("action","${pageContext.request.contextPath}/department/update");
+		// 입력폼 hidden 태그의 value 속성에 dept_id 설정
+		$("div#input input[type='hidden']").val(dept_id);
+		// 입력폼 기존 dept_name 설정
+		$("div#input input#dept_name").val(dept_name);
+	});
 });
 </script>
 <body>
@@ -1966,6 +2106,7 @@ $(document).ready(function(){
 					action="${pageContext.request.contextPath}/department/insert"
 					method="post">
 					<div class="form-group">
+						<input type="hidden" name="dept_id">
 						<input type="text" class="form-control" id="dept_name"
 							name="dept_name" placeholder="부서명 (30자 이내)" maxlength="30"
 							required="required">
@@ -2002,7 +2143,7 @@ $(document).ready(function(){
 							<td><button type="button"
 									class="btn btn-default btn-xs  btnDelete" ${e.deleteCheck=='Y'?"":"disabled"} value="${e.dept_id}">삭제</button></td>
 							<td><button type="button"
-									class="btn btn-default btn-xs  btnUpdate">수정</button></td>
+									class="btn btn-default btn-xs  btnUpdate" value='{"dept_id":"${e.dept_id}", "dept_name":"${e.dept_name}"}'>수정</button></td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -2061,6 +2202,25 @@ $(document).ready(function(){
 		location.assign("${pageContext.request.contextPath}/position/delete?job_id="+$(this).val());
 		}
 	});
+	
+	// 수정
+	$("button.btnUpdate").on("click", function(){
+		var obj = JSON.parse($(this).val());
+		var job_title = obj.job_title;
+		var job_id = obj.job_id;
+		var minBasicPay = obj.minBasicPay;
+		
+		// 입력폼 제목 수정
+		$("div#input div.panel-heading").text("직위 수정");
+		// 입력폼 액션 주소 변경
+		$("div#input form").attr("action","${pageContext.request.contextPath}/position/update");
+		// 입력폼 hidden 태그의 value 속성에 job_id 설정
+		$("div#input input[type='hidden']").val(job_id);
+		// 입력폼 기존 job_title 설정
+		$("div#input input#job_title").val(job_title);
+		// 입력폼 기존 minBasicPay 설정
+		$("div#input input#minBasicPay").val(minBasicPay);
+	});
 });
 </script>
 <body>
@@ -2095,6 +2255,7 @@ $(document).ready(function(){
 					action="${pageContext.request.contextPath}/position/insert"
 					method="post">
 					<div class="form-group">
+						<input type="hidden" name="job_id">
 						<input type="text" class="form-control" id="job_title"
 							name="job_title" placeholder="직위명 (30자 이내)" maxlength="30"
 							required="required">
@@ -2137,7 +2298,7 @@ $(document).ready(function(){
 							<td><button type="button"
 									class="btn btn-default btn-xs btnDelete" ${e.deleteCheck=='Y'?"":"disabled"} value="${e.job_id}">삭제</button></td>
 							<td><button type="button"
-									class="btn btn-default btn-xs btnUpdate">수정</button></td>
+									class="btn btn-default btn-xs btnUpdate" value='{"job_id":"${e.job_id}", "job_title":"${e.job_title}", "minBasicPay":"${e.minBasicPay}"}'>수정</button></td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -2197,6 +2358,22 @@ $(document).ready(function(){
 		location.assign("${pageContext.request.contextPath}/region/delete?reg_id="+$(this).val());
 		}
 	});
+	
+	// 수정
+	$("button.btnUpdate").on("click", function(){
+		var obj = JSON.parse($(this).val());
+		var reg_name = obj.reg_name;
+		var reg_id = obj.reg_id;
+		
+		// 입력폼 제목 수정
+		$("div#input div.panel-heading").text("지역 수정");
+		// 입력폼 액션 주소 변경
+		$("div#input form").attr("action","${pageContext.request.contextPath}/region/update");
+		// 입력폼 hidden 태그의 value 속성에 reg_id 설정
+		$("div#input input[type='hidden']").val(reg_id);
+		// 입력폼 기존 reg_name 설정
+		$("div#input input#reg_name").val(reg_name);
+	});
 });
 </script>
 <body>
@@ -2230,6 +2407,7 @@ $(document).ready(function(){
 				<form role="form"
 					action="${pageContext.request.contextPath}/region/insert"
 					method="post">
+					<input type="hidden" name="reg_id">
 					<div class="form-group">
 						<input type="text" class="form-control" id="reg_name"
 							name="reg_name" placeholder="지역명 (30자 이내)" maxlength="30"
@@ -2267,7 +2445,7 @@ $(document).ready(function(){
 							<td><button type="button"
 									class="btn btn-default btn-xs  btnDelete" ${e.deleteCheck=='Y'?"":"disabled"} value=${e.reg_id}>삭제</button></td>
 							<td><button type="button"
-									class="btn btn-default btn-xs  btnUpdate">수정</button></td>
+									class="btn btn-default btn-xs  btnUpdate" value='{"reg_id":"${e.reg_id}", "reg_name":"${e.reg_name}"}'>수정</button></td>
 						</tr>
 						</c:forEach>
 
