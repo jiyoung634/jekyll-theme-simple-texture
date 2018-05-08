@@ -37,7 +37,12 @@ redirect_from:
 	</beans:bean>
 	
 	<context:component-scan base-package="com.test.sts" />
-	
+    
+	<!-- XXXServiceImpl 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.service" />
+
+	<!-- XXXController 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.controller" />
 	
 	
 </beans:beans>
@@ -78,6 +83,13 @@ redirect_from:
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
 	</bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+    
+    <!-- XXXDAOImpl 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.persistence" />
 
 </beans>
 
@@ -336,3 +348,8 @@ redirect_from:
 
 ```
 
+
+
+
+
+**※ MyBatis 매뉴얼 사이트 : http://www.mybatis.org/mybatis-3/ko/index.html** 
