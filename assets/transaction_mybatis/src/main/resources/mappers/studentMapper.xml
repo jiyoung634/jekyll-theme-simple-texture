@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.StudentMapper">
+
+	<select id="list" resultType="com.test.domain.StudentMarks">
+		select id, name, age, marks, year from Student, Marks where Student.id=Marks.sid
+	</select>
+	
+	<insert id="studentAdd">
+		insert into Student (name, age) values (#{name}, #{age})
+	</insert>
+
+	<select id="maxID" resultType="Integer">
+		select max(id) from Student
+	</select>
+
+	<insert id="marksAdd">
+		insert into Marks(sid, marks, year) values (#{sid}, #{marks}, #{year})
+	</insert>
+
+</mapper>  
