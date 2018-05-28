@@ -754,3 +754,773 @@ ID : 8, Name : Nuha, Marks : 97, Year : 2010, Age : 20
 ID : 9, Name : Ayan, Marks : 100, Year : 2011, Age : 25
 ```
 
+
+
+
+
+
+
+# MyBatis 버전
+
+## com.test.aop>Logging.java
+
+```java
+package com.test.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+@Component
+@Aspect
+public class Logging {
+
+	@Before("execution(* com.test.service.StudentService*.*(..))")
+	public void beforeAdvice(JoinPoint jp) {
+		System.out.println("Going to setup student profile.");
+		System.out.println("--------------------");
+	}
+	
+	@After("execution(* com.test.service.StudentService*.*(..))")
+	public void afterAdvice(JoinPoint jp) {
+		System.out.println("Student profile has been setup.");
+		System.out.println("--------------------");
+	}
+	
+	@Around("execution(* com.test.service.StudentService*.*(..))")
+	public Object aroundAdvice(ProceedingJoinPoint jp) throws Throwable {
+		
+		long startTime = System.currentTimeMillis();
+		System.out.println(startTime);
+		System.out.println("--------------------");
+		
+		Object result = jp.proceed();
+		
+		long endTime = System.currentTimeMillis();
+		System.out.println(endTime);
+		System.out.println("--------------------");
+		
+		System.out.println(jp.getSignature() + " : " + (endTime - startTime));
+		System.out.println("--------------------");
+		
+		return result;
+	}
+
+}
+
+```
+
+
+
+## com.test.domain>StudentMarks.java
+
+```java
+package com.test.domain;
+
+public class StudentMarks {
+	private Integer age;
+	private String name;
+	private Integer id;
+	private Integer marks;
+	private Integer year;
+	private Integer sid;
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setMarks(Integer marks) {
+		this.marks = marks;
+	}
+
+	public Integer getMarks() {
+		return marks;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
+
+	public Integer getSid() {
+		return sid;
+	}
+}
+
+```
+
+
+
+## com.test.persistence>StudentDAO.java
+
+```java
+package com.test.persistence;
+
+import java.util.List;
+
+import com.test.domain.StudentMarks;
+
+public interface StudentDAO {
+
+   public List<StudentMarks> list();
+   public void studentAdd(StudentMarks st);
+   public void marksAdd(StudentMarks st);
+   public Integer maxID();
+
+}
+```
+
+
+
+## com.test.persistence>StudentDAOImpl.java
+
+```java
+package com.test.persistence;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import com.test.domain.StudentMarks;
+
+@Repository
+public class StudentDAOImpl implements StudentDAO {
+
+	@Inject
+	private SqlSession sqlSession;
+
+	@Override
+	public List<StudentMarks> list() {
+		return this.sqlSession.selectList("com.test.mapper.StudentMapper.list");
+	}
+
+	@Override
+	public void studentAdd(StudentMarks st) {
+		this.sqlSession.insert("com.test.mapper.StudentMapper.studentAdd", st);
+	}
+
+	@Override
+	public void marksAdd(StudentMarks st) {
+		this.sqlSession.insert("com.test.mapper.StudentMapper.marksAdd", st);
+	}
+
+	@Override
+	public Integer maxID() {
+		return this.sqlSession.selectOne("com.test.mapper.StudentMapper.maxID");
+	}
+
+}
+
+```
+
+
+
+## com.test.service>StudentService.java
+
+```java
+package com.test.service;
+
+import java.util.List;
+
+import com.test.domain.StudentMarks;
+
+public interface StudentService {
+
+	 public List<StudentMarks> list();
+	 public void create(StudentMarks st);
+	 
+}
+
+```
+
+
+
+## com.test.service>StudentServiceImpl.java
+
+```java
+package com.test.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.test.domain.StudentMarks;
+import com.test.persistence.StudentDAO;
+
+@Service
+public class StudentServiceImpl implements StudentService {
+	
+	@Inject
+	private StudentDAO studentDAO;
+
+	@Override
+	public List<StudentMarks> list() {
+		return this.studentDAO.list();
+	}
+
+	@Override
+	public void create(StudentMarks st) {
+		this.studentDAO.studentAdd(st);
+		int sid = this.studentDAO.maxID();
+		st.setSid(sid);
+		this.studentDAO.marksAdd(st);
+	}
+
+}
+
+```
+
+
+
+## com.test.controller>StudentController.java
+
+```java
+package com.test.controller;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.test.domain.StudentMarks;
+import com.test.service.StudentService;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+	
+	@Inject
+	private StudentService studentService;
+	
+	@RequestMapping("/list")
+	public String list(Model model) {
+		
+		List<StudentMarks> list =  this.studentService.list();
+		
+		model.addAttribute("list", list);
+		
+		return "student"; ///WEB-INF/views/student.jsp
+	}
+
+	@RequestMapping("/insert")
+	public String insert(StudentMarks st) {
+		
+		this.studentService.create(st);
+		
+		return "redirect:/student/list";
+	}
+	
+}
+
+```
+
+
+
+## studentMapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mapper.StudentMapper">
+
+	<select id="list" resultType="com.test.domain.StudentMarks">
+		select id, name, age, marks, year from Student, Marks where Student.id=Marks.sid
+	</select>
+	
+	<insert id="studentAdd">
+		insert into Student (name, age) values (#{name}, #{age})
+	</insert>
+
+	<select id="maxID" resultType="Integer">
+		select max(id) from Student
+	</select>
+
+	<insert id="marksAdd">
+		insert into Marks(sid, marks, year) values (#{sid}, #{marks}, #{year})
+	</insert>
+
+</mapper>  
+```
+
+
+
+## pom.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.test</groupId>
+	<artifactId>sts</artifactId>
+	<name>springAOP_20180525</name>
+	<packaging>war</packaging>
+	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<properties>
+		<!-- JAVA 버전 수정 -->
+		<java-version>1.8</java-version>
+		<!-- 스프링 프레임워크 버전 수정 -->
+		<org.springframework-version>4.3.8.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+	</properties>
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- 서블릿 설정 수정 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSP 설정 수정 -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- MySQL 라이브러리 추가 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.41</version>
+		</dependency>
+
+
+		<!-- MyBatis 라이브러리 추가 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+
+		<!-- Spring JDBC 라이브러리 추가 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Spring TEST 라이브러리 추가 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- json 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.4</version>
+		</dependency>
+
+		<!-- MyBatis에 대한 로깅 처리 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
+
+		<!-- 파일 업로드 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+
+		<!-- 엑셀 다운로드 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.16</version>
+		</dependency>
+
+
+		<!-- 트랜잭션 처리 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Spring AOP 라이브러리 설정 추가 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+		
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.test.int1.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
+```
+
+
+
+## web.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- 인코딩 필터 설정 추가 -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+</web-app>
+
+```
+
+
+
+## root-context.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- Spring AOP 설정 추가 -->
+	<aop:aspectj-autoproxy />
+
+	<!-- 데이터베이스 연결 정보 관리 -->
+	<!-- MyBatis에 대한 로깅 처리 설정 추가 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="url"
+			value="jdbc:log4jdbc:mysql://211.63.89.72:3306/test03?useSSL=false" />
+		<property name="username" value="test03" />
+		<property name="password" value="1234" />
+	</bean>
+
+	<!-- MyBatis 설정 추가 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<!-- XXXXDAOImpl 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.persistence" />
+
+	<!-- XXXXServiceImpl 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.service" />
+
+	<!-- Spring AOP 설정 추가 -->
+	<context:component-scan base-package="com.test.aop" />
+
+	<!-- 트랜잭션 설정 추가 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:annotation-driven/>
+	
+</beans>
+
+```
+
+
+
+## servlet-context.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- XXXXController 클래스에 대한 스프링 빈 등록 설정 추가 -->
+	<context:component-scan base-package="com.test.controller" />
+
+
+</beans:beans>
+
+```
+
+
+
+## 결과
+
+```java
+1527469349580
+--------------------
+Going to setup student profile.
+--------------------
+1527469349978
+--------------------
+List com.test.service.StudentService.list() : 398
+--------------------
+Student profile has been setup.
+--------------------
+```
+
